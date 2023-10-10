@@ -66,8 +66,8 @@ module.exports = {
           to: { height: 0 },
         },
         "stack-insert": {
-          from: { transform: "translateY(-12rem)", scale: "0" },
-          to: { transform: "translateY(0rem)", scale: "1" },
+          from: { transform: "translateX(-5rem)", opacity: "0" },
+          to: { transform: "translateX(0rem)", opacity: "1" },
         },
       },
       animation: {

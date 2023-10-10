@@ -11,9 +11,11 @@ export default function Home() {
         Get down all the concepts of datastructures and algorithms, with our
         modern visualizer app
       </p>
-      <Button variant="outline" className="self-center my-6">
-        <Link href="/stack">GET STARTED</Link>
-      </Button>
+      <Link href="/stack">
+        <Button variant="outline" className="self-center my-6">
+          GET STARTED
+        </Button>
+      </Link>
     </>
   );
 }
