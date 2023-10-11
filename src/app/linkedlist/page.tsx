@@ -22,8 +22,7 @@ export default function page({}: Props) {
           reference (or link) to the next element in the sequence. Linked lists
           are widely used because of their simplicity and flexibility. There are
           several types of linked lists, including singly linked lists, doubly
-          linked lists, and circular linked lists. Here, I'll focus on singly
-          linked lists, which are the most basic type.
+          linked lists, and circular linked lists.
         </p>
       </article>
       <div className="my-5">
