@@ -25,7 +25,7 @@ export default function page({}: Props) {
           linked lists, and circular linked lists.
         </p>
       </article>
-      <div className="my-5">
+      <div className="my-5 md:max-w-[70vw]">
         <LinkedListAnimation />
         {/* <Cprogramme /> */}
       </div>

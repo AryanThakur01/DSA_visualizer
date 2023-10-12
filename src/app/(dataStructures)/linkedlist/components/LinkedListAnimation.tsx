@@ -1,32 +1,34 @@
 "use client";
 import { Button, ButtonProps } from "@/components/ui/button";
-import {
-  CornerDownLeftIcon,
-  CornerDownRightIcon,
-  MoveRight,
-} from "lucide-react";
-import { MouseEvent, useEffect } from "react";
+import { CornerDownLeftIcon, CornerDownRightIcon } from "lucide-react";
+import { useState } from "react";
 
 type Props = {};
 
 export default function LinkedListAnimation({}: Props) {
+  const [disabler, setDisabler] = useState<string>("");
   const insertAtFirst = () => {
-    let val: HTMLInputElement = document.getElementById("insertVal") as any;
-    val.disabled = true;
-    let data = val?.value.trim();
-    val.value = "";
+    // Check for the insert value, and if nothing found return
+    const val: HTMLInputElement | null = document.getElementById(
+      "insertVal",
+    ) as HTMLInputElement;
+    const data: string | undefined = val?.value.trim();
     if (!data) return;
 
-    let firstInsertButton: HTMLButtonElement = document.getElementById(
-      "insertFirst",
-    ) as any;
-    firstInsertButton.disabled = true;
-    let llh: HTMLElement | null = document.getElementById("linearLLH");
-    let nodeContainer: HTMLElement = document.createElement("div");
-    let nodeData: HTMLElement = document.createElement("p");
-    let nodeNext: HTMLElement = document.createElement("div");
+    val.value = "";
+    setDisabler("insertFirst");
+
+    const llh: HTMLElement | null = document.getElementById("linearLLH");
+    if (!llh) return;
+
+    const nodeContainer: HTMLElement = document.createElement("div");
+    const nodeData: HTMLElement = document.createElement("p");
+    const nodeNext: HTMLElement = document.createElement("div");
+
     nodeNext.innerHTML =
-      '<svg class="h-6 w-6 text-border relative left-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-right"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>';
+      llh.nextElementSibling?.innerHTML === "NULL"
+        ? '<svg class="h-6 w-10 fill-border relative top-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.101 459.101"><g><polygon points="244.551,238.037 244.551,27.05 214.551,27.05 214.551,238.037 0,238.037 0,268.037 459.101,268.037 459.101,238.037"></polygon><rect x="49.551" y="320.043" width="360" height="30"></rect><rect x="94.551" y="402.05" width="270" height="30"></rect></g></svg>'
+        : '<svg class="h-6 w-6 text-border relative left-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-right"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>';
 
     nodeContainer.className = "p-2 flex animate-stack-insert";
     nodeData.className = "border border-border min-w-[3rem] px-2";
@@ -36,22 +38,37 @@ export default function LinkedListAnimation({}: Props) {
 
     nodeContainer.appendChild(nodeData);
     nodeContainer.appendChild(nodeNext);
-    llh?.before(nodeContainer);
+
+    if (llh.nextElementSibling) {
+      llh.before(nodeContainer);
+    }
 
     let choice: number = 0;
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       switch (choice) {
         case 0:
-          nodeNext.firstElementChild?.classList.toggle("text-destructive");
-          llh?.lastElementChild?.classList.toggle("text-destructive");
+          llh.lastElementChild?.classList.toggle("text-destructive");
+          llh.nextElementSibling?.classList.add("border-destructive", "border");
           break;
         case 1:
           nodeNext.firstElementChild?.classList.toggle("text-destructive");
           llh?.lastElementChild?.classList.toggle("text-destructive");
+          break;
+        case 2:
+          if (
+            llh.nextElementSibling &&
+            llh.nextElementSibling.innerHTML === "NULL"
+          ) {
+            llh.nextElementSibling.remove();
+          }
+          llh.nextElementSibling?.classList.remove(
+            "border-destructive",
+            "border",
+          );
           llh && nodeContainer.before(llh);
-          firstInsertButton.disabled = false;
-          val.disabled = false;
+          nodeNext.firstElementChild?.classList.toggle("text-destructive");
           clearInterval(interval);
+          setDisabler("");
       }
       console.log("hello");
       choice++;
@@ -69,12 +86,14 @@ export default function LinkedListAnimation({}: Props) {
             onKeyDown={(e) => {
               if (e.key === "Enter") insertAtFirst();
             }}
+            disabled={disabler === "insertFirst"}
           />
           <Button
             variant="outline"
             className="self-center"
             id="insertFirst"
-            onClick={(e) => insertAtFirst()}
+            onClick={() => insertAtFirst()}
+            disabled={disabler === "insertFirst"}
           >
             Insert At First
           </Button>
@@ -86,54 +105,34 @@ export default function LinkedListAnimation({}: Props) {
             <h3>HEAD</h3>
             <CornerDownRightIcon className="h-6 w-6 text-border relative left-8" />
           </div>
-          <div className="p-2 flex">
-            <p className="border border-border min-w-[3rem] px-2">121</p>
-            <div className="border border-border w-8 border-l-transparent flex justify-center items-center">
-              <svg
-                className="h-6 w-10 fill-border relative top-5"
-                version="1.1"
-                id="Capa_1"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 459.101 459.101"
-              >
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g
-                  id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></g>
-                <g id="SVGRepo_iconCarrier">
-                  <g id="XMLID_1468_">
-                    <polygon
-                      id="XMLID_1469_"
-                      points="244.551,238.037 244.551,27.05 214.551,27.05 214.551,238.037 0,238.037 0,268.037 459.101,268.037 459.101,238.037 "
-                    ></polygon>
-                    <rect
-                      id="XMLID_1470_"
-                      x="49.551"
-                      y="320.043"
-                      width="360"
-                      height="30"
-                    ></rect>
-                    <rect
-                      id="XMLID_1471_"
-                      x="94.551"
-                      y="402.05"
-                      width="270"
-                      height="30"
-                    ></rect>
-                  </g>
-                </g>
-              </svg>
-            </div>
-          </div>
-          {/* <div className="p-2 flex text-destructive">NULL</div> */}
-          <div className="relative bottom-5">
+          <div className="p-2 flex text-destructive">NULL</div>
+          <div className="relative bottom-5" id="LLT">
             <h3>TAIL</h3>
             <CornerDownLeftIcon className="h-6 w-6 text-border relative right-2" />
           </div>
         </div>
       </div>
+      <article className="p-1 my-4">
+        <h3>
+          <b>CHECK IF THE HEAD IS POINTING TO THE NULL</b>
+        </h3>
+        <ul className="list-disc p-4">
+          <li>
+            Head pointing to the null means insert the element such that its
+            next is pointing to the null character
+          </li>
+          <li>Also point the tail to the node</li>
+        </ul>
+        <h3>
+          <b>IF HEAD NOT POINTING TO THE NULL</b>
+        </h3>
+        <ul className="list-disc p-4">
+          <li>First create a node and insert the value</li>
+          <li>Then point the next to the head</li>
+          <li>Once pointing to the head</li>
+          <li>point the head to the current element</li>
+        </ul>
+      </article>
     </>
   );
 }
