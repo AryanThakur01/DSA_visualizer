@@ -1,5 +1,5 @@
 import { TrainTrack } from "lucide-react";
-import LinkedListAnimation from "./components/LinkedListAnimation";
+import SinglyLinearLL from "./components/SinglyLinearLL";
 
 type Props = {};
 
@@ -26,7 +26,7 @@ export default function page({}: Props) {
         </p>
       </article>
       <div className="my-5 md:max-w-[70vw]">
-        <LinkedListAnimation />
+        <SinglyLinearLL />
         {/* <Cprogramme /> */}
       </div>
     </>
