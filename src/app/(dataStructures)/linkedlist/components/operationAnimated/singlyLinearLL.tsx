@@ -1,16 +1,21 @@
 import { Dispatch, SetStateAction } from "react";
 
+const getInputValue = () => {
+  // prettier-ignore
+  let inpBlock: HTMLInputElement = document.getElementById("insertVal") as HTMLInputElement;
+
+  let val = inpBlock?.value.trim();
+  if (!inpBlock || !val) return "";
+  inpBlock.innerHTML = "";
+
+  return val;
+};
+
 export const insertAtTop = (
   setDisabler: Dispatch<SetStateAction<"insertFirst" | "insertEnd" | "">>,
 ) => {
-  // Check for the insert value, and if nothing found return
-  const val: HTMLInputElement | null = document.getElementById(
-    "insertVal",
-  ) as HTMLInputElement;
-  const data: string | undefined = val?.value.trim();
+  const data: string = getInputValue();
   if (!data) return;
-
-  val.value = "";
 
   const llh: HTMLElement | null = document.getElementById("linearLLH");
   if (!llh) return;
@@ -65,7 +70,6 @@ export const insertAtTop = (
         setDisabler("");
         clearInterval(interval);
     }
-    console.log("hello");
     choice++;
   }, 1000);
 };
@@ -73,13 +77,8 @@ export const insertAtTop = (
 export const insertAtEnd = (
   setDisabler: Dispatch<SetStateAction<"insertFirst" | "insertEnd" | "">>,
 ) => {
-  const val: HTMLInputElement | null = document.getElementById(
-    "insertVal",
-  ) as HTMLInputElement;
-  const data: string | undefined = val?.value.trim();
+  const data: string = getInputValue();
   if (!data) return;
-
-  val.value = "";
 
   const llt: HTMLElement | null = document.getElementById("linearLLT");
   if (!llt) return;
@@ -133,5 +132,45 @@ export const insertAtEnd = (
         clearInterval(interval);
     }
     choice++;
+  }, 1000);
+};
+
+export const deleteChosen = () => {
+  const data: string = getInputValue();
+  const llh: HTMLElement = document.querySelector("#linearLLH") as HTMLElement;
+
+  //Considering llt as null
+  const llt: HTMLElement = document.querySelector("#linearLLT") as HTMLElement;
+  let it: HTMLElement = llh;
+  if (!it || !data) return;
+
+  // This is loop
+  const operationInterval = setInterval(() => {
+    let elempt = it.previousElementSibling?.lastElementChild?.firstElementChild;
+    if (it.firstElementChild?.innerHTML === data) {
+      elempt?.classList.remove("text-destructive");
+      if (it.nextElementSibling === llt && elempt?.parentElement) {
+        console.log(elempt);
+        elempt.parentElement.innerHTML =
+          '<svg class="h-6 w-10 fill-border relative left-0 top-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.101 459.101"><g><polygon points="244.551,238.037 244.551,27.05 214.551,27.05 214.551,238.037 0,238.037 0,268.037 459.101,268.037 459.101,238.037"></polygon><rect x="49.551" y="320.043" width="360" height="30"></rect><rect x="94.551" y="402.05" width="270" height="30"></rect></g></svg>';
+      }
+
+      it.remove();
+      clearInterval(operationInterval);
+      return;
+    }
+    it.classList.remove("border", "border-destructive");
+    elempt?.classList.remove("text-destructive");
+
+    it = it.nextElementSibling as HTMLElement;
+    if (!it || it === llt) {
+      clearInterval(operationInterval);
+      return;
+    }
+
+    it.classList.add("border", "border-destructive");
+    it.previousElementSibling?.lastElementChild?.firstElementChild?.classList.add(
+      "text-destructive",
+    );
   }, 1000);
 };

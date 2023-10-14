@@ -2,7 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { CornerDownLeftIcon, CornerDownRightIcon } from "lucide-react";
 import { useState } from "react";
-import { insertAtEnd, insertAtTop } from "./operationAnimated/singlyLinearLL";
+import {
+  deleteChosen,
+  insertAtEnd,
+  insertAtTop,
+} from "./operationAnimated/singlyLinearLL";
 
 type Props = {};
 
@@ -40,6 +44,15 @@ export default function SinglyLinearLL({}: Props) {
             disabled={disabler === "insertEnd"}
           >
             Insert At End
+          </Button>
+          <Button
+            variant="destructive"
+            className="self-center"
+            id="insertFirst"
+            onClick={() => deleteChosen()}
+            disabled={disabler === "insertEnd"}
+          >
+            Delete
           </Button>
         </div>
       </div>
