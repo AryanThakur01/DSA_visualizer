@@ -96,13 +96,14 @@ const StackAnimation: FC<IStackAnimation> = () => {
       >
         {stack.map((elem: string, index: number) => (
           <p
+            key={`stack-Elem-${index}`}
             className={cn(
               buttonVariants({ variant: "outline" }),
               "pointer-events-none",
               peek && index === top ? "border-green-500 text-green-500" : "",
             )}
           >
-            {elem} - {index}
+            {elem}
           </p>
         ))}
         {/* <div className="flex text-muted-foreground" ref={topPointer}> */}
