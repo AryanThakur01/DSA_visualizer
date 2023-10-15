@@ -1,10 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { MouseEvent, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { FC, MouseEvent, useState } from "react";
 
-type Props = {};
+interface IStackAnimation {}
 
-export default function StackAnimation({}: Props) {
+const StackAnimation: FC<IStackAnimation> = () => {
   const [value, setValue] = useState<string>("");
   const [top, setTop] = useState<number>(-1);
   const pushVal = () => {
@@ -55,11 +56,11 @@ export default function StackAnimation({}: Props) {
     <div className="w-fit flex flex-col items-center my-9 gap-4">
       <div className="w-fit flex flex-col gap-2">
         <div className="flex gap-1">
-          {/* <div className="self-center">-1</div> */}
-          <input
+          <Input
             id="stackInput"
+            placeholder="Enter Value"
             type="text"
-            className="outline-none px-2 w-24 relative rounded-md"
+            // className="outline-none px-2 w-24 relative rounded-md"
             value={value}
             onChange={(e) => {
               value?.length <= 3 ? setValue(e.target.value) : 1;
@@ -68,6 +69,8 @@ export default function StackAnimation({}: Props) {
               if (e.key === "Enter") pushVal();
             }}
           />
+        </div>
+        <div className="flex gap-1">
           <Button variant="outline" className="self-center" onClick={pushVal}>
             Push
           </Button>
@@ -78,8 +81,6 @@ export default function StackAnimation({}: Props) {
           >
             Pop
           </Button>
-        </div>
-        <div className="flex gap-1">
           <Button
             variant="outline"
             className="self-center w-16"
@@ -130,4 +131,5 @@ export default function StackAnimation({}: Props) {
       </div>
     </div>
   );
-}
+};
+export default StackAnimation;

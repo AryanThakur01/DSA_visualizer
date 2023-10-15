@@ -27,7 +27,6 @@ export default function page({}: Props) {
       </article>
       <div className="my-5 md:max-w-[70vw]">
         <SinglyLinearLL />
-        {/* <Cprogramme /> */}
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <>
+    <div className="w-full py-8 container">
       <h1 className="font-bold text-3xl ">
         DATA STRUCTURES AND ALGORITHMS VISUALIZER
       </h1>
@@ -16,6 +16,6 @@ export default function Home() {
           GET STARTED
         </Button>
       </Link>
-    </>
+    </div>
   );
 }

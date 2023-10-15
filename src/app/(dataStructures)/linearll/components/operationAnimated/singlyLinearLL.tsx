@@ -137,10 +137,12 @@ export const insertAtEnd = (
 
 export const deleteChosen = () => {
   const data: string = getInputValue();
-  const llh: HTMLElement = document.querySelector("#linearLLH") as HTMLElement;
+  const llh: HTMLElement | null = document.querySelector("#linearLLH");
 
-  //Considering llt as null
-  const llt: HTMLElement = document.querySelector("#linearLLT") as HTMLElement;
+  //Considering llt instead of null pointer
+  const llt: HTMLElement | null = document.querySelector("#linearLLT");
+  if (!llh || llt) return;
+
   let it: HTMLElement = llh;
   if (!it || !data) return;
 

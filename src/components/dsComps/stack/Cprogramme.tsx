@@ -1,9 +1,10 @@
-type Props = {};
+import { FC } from "react";
 
-export default function Cprogramme({}: Props) {
-  return (
-    <div className="border border-border rounded-md px-2 background-card shadow-sm bg-muted">
-      <pre className="max-h-[80vh] max-w-full overflow-scroll">{`
+interface ICprogramme {}
+
+const Cprogramme: FC<ICprogramme> = () => {
+  // Question: Why use markdown when we have to do this with markdown as well
+  const code = `
 #include <iostream>
 
 using namespace std;
@@ -62,7 +63,12 @@ int main() {
   st.MyStack_push(110);
   return 0;
 }
-`}</pre>
+`;
+  return (
+    <div className="border border-border rounded-md px-2 background-card shadow-sm bg-muted">
+      <pre className="max-h-[80vh] max-w-full overflow-scroll">{code}</pre>
     </div>
   );
-}
+};
+
+export default Cprogramme;

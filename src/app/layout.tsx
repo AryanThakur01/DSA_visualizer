@@ -1,9 +1,12 @@
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
+import "./layout.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "./components/ThemeProvider";
-import Nav from "./components/Nav";
-import LeftNav from "./components/LeftNav";
+import Nav from "@/components/Nav";
+// import { ThemeProvider } from "./components/ThemeProvider";
+// import Nav from "./components/Nav";
+// import LeftNav from "./components/LeftNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,19 +30,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {/* Top Navigation Menu */}
-          <header className="sticky top-0 w-full border-b border-border py-2 text-foreground z-50 bg-background">
+          <header className="sticky top-0 w-full border-b border-border py-2 text-foreground z-50 bg-background flex items-center">
             <Nav />
           </header>
 
           {/* Main Contents */}
-          <main className="flex min-h-[80vh]">
-            {/* Side Navigation */}
-            <aside className="h-fit sticky top-16 container md:block hidden max-w-[18rem] py-6">
-              <LeftNav />
-            </aside>
-            {/* Contents */}
-            <div className="w-full py-8 container">{children}</div>
-          </main>
+          <main className="flex min-h-[80vh]">{children}</main>
         </ThemeProvider>
       </body>
     </html>

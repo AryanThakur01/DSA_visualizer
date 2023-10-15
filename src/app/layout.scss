@@ -1,0 +1,48 @@
+// fixed h-full md:block flex flex-col container py-6 
+
+.aside__nav {
+  width: 15rem;
+  max-width: 25vw;
+  z-index: 40;
+  background-color: hsl(var(--background));
+  height: fit-content;
+  position: sticky;
+  display: block;
+  top: 3.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .aside__nav {
+    display: none;
+    position: fixed;
+    max-width: 80vw;
+    height: 90vh;
+  }
+  .aside__overlay {
+    background-color: black;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 200vw;
+    z-index: -1;
+    opacity: 0.3;
+  }
+  .aside__nav-open {
+    z-index: 1;
+    display: unset;
+    transform: translateX(0);
+    animation: leftNavToggle 1s ease-out;
+  }
+  @keyframes leftNavToggle {
+    from {
+      display: none;
+      transform: translateX(-100vw);
+    }
+    to {
+      display: unset;
+      transform: translateX(0);
+    }
+  }
+}
