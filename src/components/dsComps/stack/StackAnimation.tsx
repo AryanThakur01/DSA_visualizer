@@ -99,7 +99,7 @@ const StackAnimation: FC<IStackAnimation> = () => {
             key={`stack-Elem-${index}`}
             className={cn(
               buttonVariants({ variant: "outline" }),
-              "pointer-events-none",
+              "pointer-events-none animate-stack-insert",
               peek && index === top ? "border-green-500 text-green-500" : "",
             )}
           >
