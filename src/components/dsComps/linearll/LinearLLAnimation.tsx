@@ -21,7 +21,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
 
   const [selectedBlock, setSelectedBlock] = useState<number | null>(); // temp
   const [value, setValue] = useState<string>(""); // Input
-  const [llElems, setLLElems] = useState<string[]>(["1", "2", "3", "4", "5"]); // Update LL
+  const [llElems, setLLElems] = useState<string[]>([]); // Update LL
   const [ptrHead, setPtrHead] = useState<boolean>(false); // Head Pointer
   const [ptrTail, setPtrTail] = useState<boolean>(false); // Tail Pointer
   const [showAddress, setShowAddress] = useState<boolean>(false); //next
@@ -142,43 +142,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
   };
   return (
     <>
-      <div className="my-3">
-        <div className="w-fit grid md:grid-cols-2 grid-cols-1 gap-2">
-          <div className="flex gap-1">
-            <Input
-              disabled={animating}
-              placeholder="Enter Value"
-              type="text"
-              value={value}
-              onChange={(e) => {
-                setValue(e.target.value);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") push();
-              }}
-            />
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            <Button variant="outline" onClick={push} disabled={animating}>
-              Push
-            </Button>
-            <Button variant="destructive" disabled={animating} onClick={pop}>
-              Pop
-            </Button>
-            <Button variant="outline" disabled={animating} onClick={enqueue}>
-              Enqueue
-            </Button>
-            <Button
-              variant="destructive"
-              disabled={animating}
-              onClick={dequeue}
-            >
-              Dequeue
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div className="overflow-x-scroll md:w-[65vw] border border-border p-2 py-8">
+      <div className="overflow-x-scroll md:w-[65vw] border border-border p-2 py-8 mt-5">
         <div className="flex gap-3 text-center w-fit">
           <div className="relative bottom-5">
             <h3>HEAD</h3>
@@ -273,6 +237,42 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
             ) : (
               <></>
             )}
+          </div>
+        </div>
+      </div>
+      <div className="my-3">
+        <div className="w-fit grid md:grid-cols-2 grid-cols-1 gap-2">
+          <div className="flex gap-1">
+            <Input
+              disabled={animating}
+              placeholder="Enter Value"
+              type="text"
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") push();
+              }}
+            />
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <Button variant="outline" onClick={push} disabled={animating}>
+              Push
+            </Button>
+            <Button variant="destructive" disabled={animating} onClick={pop}>
+              Pop
+            </Button>
+            <Button variant="outline" disabled={animating} onClick={enqueue}>
+              Enqueue
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={animating}
+              onClick={dequeue}
+            >
+              Dequeue
+            </Button>
           </div>
         </div>
       </div>
