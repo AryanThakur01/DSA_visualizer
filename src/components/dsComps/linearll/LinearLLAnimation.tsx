@@ -208,6 +208,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
             <>
               {llElems.map((val: string, index: number) => (
                 <div
+                  key={`linearLLElem-${index}`}
                   className={`w-fit p-1 border flex ${
                     selectedBlock === index ||
                     (popping && index === 1) ||
