@@ -1,10 +1,10 @@
 "use client";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Input, InputProps } from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { CornerRightDown } from "lucide-react";
 import Image from "next/image";
-import { FC, MouseEvent, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 
 interface IStackAnimation {}
 
@@ -50,7 +50,7 @@ const StackAnimation: FC<IStackAnimation> = () => {
             type="text"
             value={value}
             onChange={(e) => {
-              value?.length <= 3 ? setValue(e.target.value) : 1;
+              setValue(e.target.value);
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") pushVal();
@@ -64,7 +64,7 @@ const StackAnimation: FC<IStackAnimation> = () => {
           <Button variant="destructive" onClick={popVal}>
             Pop
           </Button>
-          <Button variant="outline" className="w-16" onClick={(e) => peeker()}>
+          <Button variant="outline" className="w-16" onClick={() => peeker()}>
             {peek ? (
               <Image
                 src={"/eyes.gif"}
@@ -106,7 +106,6 @@ const StackAnimation: FC<IStackAnimation> = () => {
             {elem}
           </p>
         ))}
-        {/* <div className="flex text-muted-foreground" ref={topPointer}> */}
         <div className="flex text-muted-foreground">
           <p>top {top}</p>
           <CornerRightDown className="relative top-5 right-4" />
