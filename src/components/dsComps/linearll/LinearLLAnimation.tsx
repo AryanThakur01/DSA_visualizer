@@ -143,7 +143,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
   return (
     <>
       <div className="my-3">
-        <div className="w-fit flex  gap-2">
+        <div className="w-fit grid md:grid-cols-2 grid-cols-1 gap-2">
           <div className="flex gap-1">
             <Input
               disabled={animating}
