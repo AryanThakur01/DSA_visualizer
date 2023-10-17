@@ -2,7 +2,7 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { CornerRightDown } from "lucide-react";
+import { CornerRightDown, MoveRight } from "lucide-react";
 import Image from "next/image";
 import { FC, useRef, useState } from "react";
 
@@ -90,10 +90,7 @@ const StackAnimation: FC<IStackAnimation> = () => {
           </p>
         </div>
       </div>
-      <div
-        id="stackContainer"
-        className="min-h-[10rem] bg-card border border-border border-t-background shadow w-40 p-2 flex flex-col-reverse gap-2 rounded-md"
-      >
+      <div className="my-10 min-h-[10rem] bg-card border border-border border-t-background shadow w-40 p-2 flex flex-col-reverse gap-2 rounded-md">
         {stack.map((elem: string, index: number) => (
           <p
             key={`stack-Elem-${index}`}
@@ -106,10 +103,14 @@ const StackAnimation: FC<IStackAnimation> = () => {
             {elem}
           </p>
         ))}
-        <div className="flex text-muted-foreground">
+        <div className="flex text-muted-foreground relative top-10 right-16">
           <p>top {top}</p>
-          <CornerRightDown className="relative top-5 right-4" />
+          <MoveRight />
         </div>
+        {/* <div className="flex text-muted-foreground"> */}
+        {/*   <p>top {top}</p> */}
+        {/*   <CornerRightDown className="relative top-5 right-4" /> */}
+        {/* </div> */}
       </div>
     </div>
   );

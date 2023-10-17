@@ -26,7 +26,6 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
   const [ptrHead, setPtrHead] = useState<boolean>(false); // Head Pointer
   const [ptrTail, setPtrTail] = useState<boolean>(false); // Tail Pointer
   const [showAddress, setShowAddress] = useState<boolean>(false); //next
-  const refInput = useRef<HTMLInputElement>(null);
 
   const enqueue = () => {
     if (!value.trim()) {
@@ -134,7 +133,6 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
           setAnimating(false);
           setShowTemp(false);
           setShowAddress(false);
-          refInput.current?.focus();
           clearInterval(selectorInt);
           break;
       }
@@ -143,7 +141,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
   };
   return (
     <>
-      <div className="overflow-x-scroll md:w-[65vw] border border-border p-2 py-8 mt-5">
+      <div className="overflow-x-scroll md:w-[65vw] border border-border p-2 pt-20 mt-5">
         <div className="flex gap-3 text-center w-fit">
           <div className="relative bottom-5">
             <h3>HEAD</h3>
@@ -152,7 +150,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
             ) : (
               <CornerDownRightIcon
                 className={`scale-105 text-border relative left-8  ${
-                  popping || dequing
+                  popping || (dequing && llElems.length === 1)
                     ? llElems.length !== 1
                       ? "stroke-destructive"
                       : "stroke-success"
@@ -176,7 +174,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
               {llElems.map((val: string, index: number) => (
                 <div
                   key={`linearLLElem-${index}`}
-                  className={`w-fit p-1 rounded border-2 flex ${
+                  className={` w-fit p-1 rounded border-2 flex ${
                     selectedBlock === index ||
                     (popping && index === 1) ||
                     (dequing && index === llElems.length - 2)
@@ -216,7 +214,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
             ) : (
               <CornerDownLeftIcon
                 className={`scale-105 text-border relative right-2 ${
-                  dequing
+                  dequing || (popping && llElems.length === 1)
                     ? llElems.length === 1
                       ? "stroke-success"
                       : "stroke-destructive"
@@ -259,7 +257,6 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
         <div className="w-fit grid md:grid-cols-2 grid-cols-1 gap-2">
           <div className="flex gap-1">
             <Input
-              ref={refInput}
               disabled={animating}
               placeholder="Enter Value"
               type="text"
