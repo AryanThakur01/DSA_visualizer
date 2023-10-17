@@ -70,10 +70,17 @@ const LeftNavContent = () => {
           >
             Stack
           </Link>
+
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1" className="border-none">
-              <AccordionTrigger className="p-0 hover:no-underline my-2 font-light">
-                LinkedList
+              <AccordionTrigger className="p-0 hover:no-underline font-light">
+                <Link
+                  href="/linkedlist"
+                  className={pathname === "/linkedlist" ? "text-primary" : ""}
+                >
+                  Linked List
+                </Link>
+                {/* LinkedList */}
               </AccordionTrigger>
               <AccordionContent className="ml-4 pl-2 font-extralight">
                 <ul>
@@ -87,9 +94,9 @@ const LeftNavContent = () => {
                   </li>
                   <li className="my-2">
                     <Link
-                      href="/linkedlist"
+                      href="/circularlinearll"
                       className={
-                        pathname === "/circularll" ? "text-primary" : ""
+                        pathname === "/circularlinearll" ? "text-primary" : ""
                       }
                     >
                       Singly Linked Circular

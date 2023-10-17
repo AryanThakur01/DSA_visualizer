@@ -67,8 +67,18 @@ module.exports = {
           to: { height: 0 },
         },
         "stack-insert": {
-          from: { transform: "translateX(-5rem)", opacity: "0" },
-          to: { transform: "translateX(0rem)", opacity: "1" },
+          from: {
+            transform: "translateY(-4rem)",
+            opacity: "0",
+            border: "2px solid transparent",
+            color: "transparent",
+          },
+          to: {
+            transform: "translateY(0rem)",
+            opacity: "1",
+            border: "2px solid hsl(var(--success))",
+            color: "hsl(var(--success))",
+          },
         },
         "expand-right": {
           from: { width: "0.2rem" },
@@ -78,7 +88,7 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "stack-insert": "stack-insert 0.6s ease-out",
+        "stack-insert": "stack-insert 1s ease-out",
         "expand-right": "expand-right 0.6s ease-out",
       },
     },
