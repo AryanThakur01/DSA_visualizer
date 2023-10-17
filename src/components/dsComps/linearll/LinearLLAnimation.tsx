@@ -1,14 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import {
-  ArrowDown,
   CircleIcon,
   CornerDownLeftIcon,
   CornerDownRightIcon,
+  MoveDown,
   MoveRight,
 } from "lucide-react";
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 
 interface SinglyLinearLL {}
 
@@ -25,6 +26,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
   const [ptrHead, setPtrHead] = useState<boolean>(false); // Head Pointer
   const [ptrTail, setPtrTail] = useState<boolean>(false); // Tail Pointer
   const [showAddress, setShowAddress] = useState<boolean>(false); //next
+  const refInput = useRef<HTMLInputElement>(null);
 
   const enqueue = () => {
     if (!value.trim()) {
@@ -38,21 +40,19 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
       return;
     }
     setShowTemp(true);
-    setShowAddress(false);
     setAnimating(true);
 
     let step = 1;
     let selectorInt = setInterval(() => {
       switch (step) {
         case 1:
-          setSelectedBlock(llElems.length - 1);
-          break;
-        case 2:
+          // setSelectedBlock(llElems.length - 1);
+          setShowAddress(true);
           setPtrTail(true);
           break;
-        case 3:
+        case 2:
           setLLElems([...llElems, value]);
-          setSelectedBlock(null);
+          setShowAddress(false);
           setAnimating(false);
           setShowTemp(false);
           setPtrTail(false);
@@ -134,6 +134,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
           setAnimating(false);
           setShowTemp(false);
           setShowAddress(false);
+          refInput.current?.focus();
           clearInterval(selectorInt);
           break;
       }
@@ -146,12 +147,12 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
         <div className="flex gap-3 text-center w-fit">
           <div className="relative bottom-5">
             <h3>HEAD</h3>
-            {ptrHead ? (
-              <ArrowDown className="scale-105 text-border relative left-4 stroke-primary" />
+            {ptrHead || (ptrTail && !llElems.length) ? (
+              <MoveDown className="scale-105 text-border relative left-4 stroke-primary" />
             ) : (
               <CornerDownRightIcon
                 className={`scale-105 text-border relative left-8  ${
-                  popping
+                  popping || dequing
                     ? llElems.length !== 1
                       ? "stroke-destructive"
                       : "stroke-success"
@@ -162,8 +163,10 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
           </div>
           {!llElems.length ? (
             <div
-              className={`p-2 items-center flex text-success border ${
-                selectedBlock ? "border-destructive" : "border-transparent"
+              className={`p-2 items-center flex text-success border-2 rounded ${
+                selectedBlock === 0
+                  ? "border-destructive"
+                  : "border-transparent"
               }`}
             >
               NULL
@@ -173,7 +176,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
               {llElems.map((val: string, index: number) => (
                 <div
                   key={`linearLLElem-${index}`}
-                  className={`w-fit p-1 border flex ${
+                  className={`w-fit p-1 rounded border-2 flex ${
                     selectedBlock === index ||
                     (popping && index === 1) ||
                     (dequing && index === llElems.length - 2)
@@ -209,7 +212,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
           <div className="relative bottom-5">
             <h3>TAIL</h3>
             {ptrTail ? (
-              <ArrowDown className="scale-105 text-border relative left-4 stroke-primary" />
+              <MoveDown className="scale-105 text-border relative left-4 stroke-primary" />
             ) : (
               <CornerDownLeftIcon
                 className={`scale-105 text-border relative right-2 ${
@@ -224,16 +227,28 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
           </div>
         </div>
         <div
-          className={`border w-fit p-1 flex my-3 ${
-            ptrHead || ptrTail ? "border-primary" : "border-transparent"
-          } ${showTemp ? "" : "invisible"}`}
+          className={cn(
+            `border-2 rounded w-fit p-1 flex my-3`,
+            ptrHead || ptrTail ? "border-primary" : "border-transparent",
+            showTemp ? "" : "invisible",
+            animating ? "animate-stack-insert" : "",
+          )}
         >
           <div className="rounded-none border border-border p-1 min-w-[3rem] text-center">
             {value.trim() ? value : "-"}
           </div>
-          <div className="rounded-none border border-border p-1 w-fit">
+          <div
+            className={cn(
+              "rounded-none border border-border overflow-hidden flex justify-center items-center",
+              animating && showAddress ? "animate-expand-right w-[2rem]" : "",
+            )}
+          >
             {showAddress ? (
-              <CircleIcon className="fill-destructive stroke-none" />
+              ptrTail ? (
+                <CircleIcon className="fill-success stroke-none" />
+              ) : (
+                <CircleIcon className="fill-destructive stroke-none" />
+              )
             ) : (
               <></>
             )}
@@ -244,6 +259,7 @@ const LinearLLAnimation: FC<SinglyLinearLL> = () => {
         <div className="w-fit grid md:grid-cols-2 grid-cols-1 gap-2">
           <div className="flex gap-1">
             <Input
+              ref={refInput}
               disabled={animating}
               placeholder="Enter Value"
               type="text"
