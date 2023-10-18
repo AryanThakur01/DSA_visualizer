@@ -84,12 +84,23 @@ module.exports = {
           from: { width: "0.2rem" },
           to: { width: "2rem" },
         },
+        "movein-right": {
+          from: {
+            transform: "translateX(-4rem)",
+            opacity: "0",
+          },
+          to: {
+            transform: "translateX(0rem)",
+            opacity: "1",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "stack-insert": "stack-insert 1s ease-out",
         "expand-right": "expand-right 0.6s ease-out",
+        "movein-right": "movein-right 0.8s ease-out",
       },
     },
   },

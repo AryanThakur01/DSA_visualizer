@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { FC, useState } from "react";
+import { FC } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { buttonVariants } from "@/components/ui/button";
 import { MenuIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   Sheet,
@@ -59,6 +59,7 @@ const LeftNav: FC<ILeftNav> = () => {
 
 const LeftNavContent = () => {
   const pathname = usePathname();
+
   return (
     <>
       <div className="bg-background h-full w-full p-5">
@@ -86,17 +87,19 @@ const LeftNavContent = () => {
                 <ul>
                   <li className="my-2">
                     <Link
-                      href="/linearll"
-                      className={pathname === "/linearll" ? "text-primary" : ""}
+                      href="/linkedlist#sll"
+                      className={
+                        pathname === "/linkedlist#sll" ? "text-primary" : ""
+                      }
                     >
                       Singly Linked Linear
                     </Link>
                   </li>
                   <li className="my-2">
                     <Link
-                      href="/circularlinearll"
+                      href="/linkedlist#cll"
                       className={
-                        pathname === "/circularlinearll" ? "text-primary" : ""
+                        pathname === "/linkedlist#cll" ? "text-primary" : ""
                       }
                     >
                       Singly Linked Circular
@@ -104,7 +107,7 @@ const LeftNavContent = () => {
                   </li>
                   <li className="my-2">
                     <Link
-                      href="/linkedlist"
+                      href="/linkedlist#dll"
                       className={pathname === "/doublyll" ? "text-primary" : ""}
                     >
                       Doubly Linked Linear
@@ -112,9 +115,9 @@ const LeftNavContent = () => {
                   </li>
                   <li className="my-2">
                     <Link
-                      href="/linkedlist"
+                      href="/linkedlist#dcll"
                       className={
-                        pathname === "/doublycll" ? "text-primary" : ""
+                        pathname === "/linkedlist#dcll" ? "text-primary" : ""
                       }
                     >
                       Doubly Linked Circular

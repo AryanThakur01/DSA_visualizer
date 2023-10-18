@@ -4,6 +4,7 @@ import "./layout.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Nav from "@/components/Nav";
+import Script from "next/script";
 // import { ThemeProvider } from "./components/ThemeProvider";
 // import Nav from "./components/Nav";
 // import LeftNav from "./components/LeftNav";
@@ -23,6 +24,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className + " bg-background"}>
+        <div className="container">
+          <Script src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" />
+          <Script id="google-analytics">
+            {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', 'GA_MEASUREMENT_ID');
+        `}
+          </Script>
+        </div>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
