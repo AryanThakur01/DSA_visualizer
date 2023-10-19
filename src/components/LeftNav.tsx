@@ -77,7 +77,9 @@ const LeftNavContent = () => {
               <AccordionTrigger className="p-0 hover:no-underline font-light">
                 <Link
                   href="/linkedlist"
-                  className={pathname === "/linkedlist" ? "text-primary" : ""}
+                  className={
+                    pathname.match("/linkedlist") ? "text-primary" : ""
+                  }
                 >
                   Linked List
                 </Link>
@@ -121,6 +123,30 @@ const LeftNavContent = () => {
                       }
                     >
                       Doubly Linked Circular
+                    </Link>
+                  </li>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1" className="border-none">
+              <AccordionTrigger className="p-0 hover:no-underline font-light">
+                <Link
+                  href="/misc"
+                  className={pathname.match("/misc/*") ? "text-primary" : ""}
+                >
+                  Miscellaneous
+                </Link>
+              </AccordionTrigger>
+              <AccordionContent className="ml-4 pl-2 font-extralight">
+                <ul>
+                  <li className="my-2">
+                    <Link
+                      href="/misc/toh"
+                      className={pathname === "/misc/toh" ? "text-primary" : ""}
+                    >
+                      Tower Of Hanoi
                     </Link>
                   </li>
                 </ul>

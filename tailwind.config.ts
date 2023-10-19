@@ -94,6 +94,10 @@ module.exports = {
             opacity: "1",
           },
         },
+        "disc-out": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(-10rem)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -101,6 +105,7 @@ module.exports = {
         "stack-insert": "stack-insert 1s ease-out",
         "expand-right": "expand-right 0.6s ease-out",
         "movein-right": "movein-right 0.8s ease-out",
+        "disc-out": "disc-out 1s ease-out",
       },
     },
   },

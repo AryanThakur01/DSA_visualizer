@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from "react";
 
 interface IDsTemplate {
   title: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   intro: string;
   children: ReactNode;
 }

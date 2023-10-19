@@ -49,3 +49,30 @@
     --ring: 224.3 76.3% 48%;
   }
 }
+
+/* Works on Firefox */
+* {
+  scrollbar-width: 5px;
+  scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--accent));
+}
+
+/* Works on Brave, Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 4px;
+}
+@media screen and (max-width: 768px) {
+  *::-webkit-scrollbar {
+    height: 0px;
+  }
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--accent));
+  padding: 2px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted-foreground));
+  border-radius: 8px;
+}

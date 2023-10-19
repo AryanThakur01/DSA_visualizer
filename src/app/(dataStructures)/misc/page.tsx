@@ -1,13 +1,10 @@
-import React from "react";
+import MiscellaneousIndex from "@/components/dsComps/misc/Miscellaneous";
+import { FC } from "react";
 
-type Props = {};
+interface IMiscellaneous {}
 
-const Miscellaneous = (props: Props) => {
-  return (
-    <>
-      <div>page</div>
-    </>
-  );
+const page: FC<IMiscellaneous> = () => {
+  return <MiscellaneousIndex />;
 };
 
-export default Miscellaneous;
+export default page;

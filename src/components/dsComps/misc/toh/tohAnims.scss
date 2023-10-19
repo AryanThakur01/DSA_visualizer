@@ -1,0 +1,28 @@
+.discs-lift {
+  margin-bottom: 0.2rem;
+  animation: moveUp 0.2s ease-out;
+}
+.disc-out {
+  transform: translateY(-10rem);
+  animation: takeOutDisc 3s ease-out;
+}
+.disc-in {
+  animation: takeOutDisc 3s ease-out reverse;
+}
+
+@keyframes takeOutDisc {
+  from {
+    transform: translateY(0rem);
+  }
+  to {
+    transform: translateY(-10rem);
+  }
+}
+@keyframes moveUp {
+  from {
+    margin-bottom: 0rem;
+  }
+  to {
+    margin-bottom: 0.2rem;
+  }
+}
