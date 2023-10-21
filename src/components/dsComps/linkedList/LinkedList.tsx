@@ -2,7 +2,7 @@ import { FC } from "react";
 import Template, { LLSectionTemplate } from "../Template";
 import { AlignVerticalSpaceAround } from "lucide-react";
 import LinearLLAnimation from "./LinearLLAnimation";
-import CircularLLAnimation from "./CircularLLAnimation";
+import Sll from "./Sll";
 
 interface ILinearLL {}
 
@@ -17,6 +17,7 @@ const LinearLL: FC<ILinearLL> = () => {
         <LLSectionTemplate>
           <LinearLLAnimation />
         </LLSectionTemplate>
+        <Sll />
         <LLSectionTemplate subHeader="Singly Circular Linked List" id="cll">
           <p>
             A linear circular linked list, sometimes referred to as a circular

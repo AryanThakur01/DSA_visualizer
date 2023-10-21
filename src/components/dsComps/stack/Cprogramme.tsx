@@ -1,72 +1,15 @@
 import { FC } from "react";
+import Code from "./c-code.mdx";
 
 interface ICprogramme {}
 
 const Cprogramme: FC<ICprogramme> = () => {
-  // Question: Why use markdown when we have to do this with markdown as well
-  const code = `
-#include <iostream>
-
-using namespace std;
-
-class MyStack {
-private:
-  int size;
-  int top = -1;
-  int *stack = nullptr;
-
-public:
-  MyStack(int size) {
-    this->size = size;
-    stack = new int[size];
-    if (stack == nullptr)
-      cout << "Memory Allocation Failed";
-  }
-  void MyStack_push(int value) {
-    if (top >= size - 1) {
-      cerr << "*** Memory Allocation Failed for value: " << value << endl;
-      return;
-    }
-    stack[++top] = value;
-    return;
-  }
-  int MyStack_pop() {
-    if (top == -1) {
-      cout << "Nothing to pop";
-      return -1;
-    }
-    return stack[top--];
-  }
-  int MyStack_top() {
-    if (top == -1) {
-      cout << "Stack Empty";
-      return -1;
-    }
-    return stack[top];
-  }
-  bool MyStack_isEmpty() { return (top == -1 ? 1 : 0); }
-  ~MyStack() { delete[] stack; }
-};
-
-int main() {
-  MyStack st(10);
-  st.MyStack_push(10);
-  st.MyStack_push(20);
-  st.MyStack_push(30);
-  st.MyStack_push(40);
-  st.MyStack_push(50);
-  st.MyStack_push(60);
-  st.MyStack_push(70);
-  st.MyStack_push(80);
-  st.MyStack_push(90);
-  st.MyStack_push(100);
-  st.MyStack_push(110);
-  return 0;
-}
-`;
+  const code = Code;
   return (
     <div className="border border-border rounded-md px-2 background-card shadow-sm bg-muted">
-      <pre className="max-h-[80vh] max-w-full overflow-scroll">{code}</pre>
+      <pre className="max-h-[80vh] max-w-full overflow-scroll">
+        {/* {code} */}
+      </pre>
     </div>
   );
 };
