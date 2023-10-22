@@ -4,10 +4,10 @@
 }
 .disc-out {
   transform: translateY(-10rem);
-  animation: takeOutDisc 3s ease-out;
+  animation: takeOutDisc 2s ease-out;
 }
 .disc-in {
-  animation: takeOutDisc 3s ease-out reverse;
+  animation: takeOutDisc 2s ease-out reverse;
 }
 
 @keyframes takeOutDisc {
