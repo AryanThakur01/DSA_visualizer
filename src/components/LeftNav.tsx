@@ -78,7 +78,7 @@ const LeftNavContent = () => {
                 <Link
                   href="/linkedlist"
                   className={
-                    pathname.match("/linkedlist") ? "text-primary" : ""
+                    pathname?.match("/linkedlist") ? "text-primary" : ""
                   }
                 >
                   Linked List
@@ -134,7 +134,7 @@ const LeftNavContent = () => {
               <AccordionTrigger className="p-0 hover:no-underline font-light">
                 <Link
                   href="/misc"
-                  className={pathname.match("/misc/*") ? "text-primary" : ""}
+                  className={pathname?.match("/misc/*") ? "text-primary" : ""}
                 >
                   Miscellaneous
                 </Link>
