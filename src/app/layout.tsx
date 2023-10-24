@@ -5,9 +5,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Nav from "@/components/Nav";
 import Script from "next/script";
-// import { ThemeProvider } from "./components/ThemeProvider";
-// import Nav from "./components/Nav";
-// import LeftNav from "./components/LeftNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
