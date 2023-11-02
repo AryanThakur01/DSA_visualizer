@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FC, useEffect, useState } from "react";
+import { nodeActivator, nodeSelector } from "./handler-library";
 
 interface INodeVals {
   value: number;
@@ -19,51 +20,17 @@ const BinaryTreeAnimation: FC<IBinaryTree> = () => {
   const [preOrder, setPreOrder] = useState<number[]>([]);
   const [inOrder, setInOrder] = useState<number[]>([]);
   const [postOrder, setPostOrder] = useState<number[]>([]);
+  const [running, setRunning] = useState<boolean>(false);
   let nodes = { ...nodeVals };
+  //========================== Pre Order Handler ==============================
   let preOrderTemp: number[] = [];
-  const nodeActivator = (
-    path: Array<"l" | "r" | "root">,
-    node: INodeVals,
-    level = 0,
-  ) => {
-    if (path.length === 1) {
-      if (node.isActive) {
-        node.isSelected = true;
-        node.isActive = false;
-        preOrderTemp.push(node.value);
-        setPreOrder(preOrderTemp);
-      } else node.isActive = true;
-    }
-    path.splice(0, 1);
-    if (node.nodeL && path[0] === "l")
-      nodeActivator(path, node.nodeL, level + 1);
-    else if (node.nodeR && path[0] === "r")
-      nodeActivator(path, node.nodeR, level + 1);
-    if (level === 0) setNodeVals({ ...node });
-  };
-  const nodeSelector = (nodes: INodeVals, path: Array<"l" | "r" | "root">) => {
-    return new Promise((resolve) => {
-      nodeActivator([...path], nodes);
-      let step = 1;
-      let steppingInt = setInterval(() => {
-        switch (step) {
-          case 1:
-            nodeActivator([...path], nodes);
-            break;
-          case 2:
-            clearInterval(steppingInt);
-            resolve("Success");
-            break;
-        }
-        step++;
-      }, 1000);
-    });
-  };
+  let inOrderTemp: number[] = [];
+  let postOrderTemp: number[] = [];
   const preOrderSelector = async (
     path: Array<"l" | "r" | "root">,
     initialNode?: INodeVals,
   ) => {
-    await nodeSelector(nodes, path);
+    await nodeSelector(nodes, path, preOrderTemp, setNodeVals, setPreOrder);
 
     if (initialNode?.nodeL) {
       path.push("l");
@@ -75,6 +42,56 @@ const BinaryTreeAnimation: FC<IBinaryTree> = () => {
     }
     path.pop();
   };
+  const preOrderHandler = async () => {
+    setRunning(true);
+    await preOrderSelector(["root"], { ...nodeVals });
+    setRunning(false);
+  };
+  //===========================================================================
+  //=========================== In-Order Handler =============================
+  const inOrderSelector = async (
+    path: Array<"l" | "r" | "root">,
+    initialNode?: INodeVals,
+  ) => {
+    if (initialNode?.nodeL) {
+      path.push("l");
+      await inOrderSelector(path, initialNode?.nodeL);
+    }
+    await nodeSelector(nodes, path, inOrderTemp, setNodeVals, setInOrder);
+    if (initialNode?.nodeR) {
+      path.push("r");
+      await inOrderSelector(path, initialNode?.nodeR);
+    }
+    path.pop();
+  };
+  const inOrderHandler = async () => {
+    setRunning(true);
+    await inOrderSelector(["root"], { ...nodeVals });
+    setRunning(false);
+  };
+  //===========================================================================
+  //=========================== Post-Order Handler =============================
+  const postOrderSelector = async (
+    path: Array<"l" | "r" | "root">,
+    initialNode?: INodeVals,
+  ) => {
+    if (initialNode?.nodeL) {
+      path.push("l");
+      await postOrderSelector(path, initialNode?.nodeL);
+    }
+    if (initialNode?.nodeR) {
+      path.push("r");
+      await postOrderSelector(path, initialNode?.nodeR);
+    }
+    await nodeSelector(nodes, path, postOrderTemp, setNodeVals, setPostOrder);
+    path.pop();
+  };
+  const postOrderHandler = async () => {
+    setRunning(true);
+    await postOrderSelector(["root"], { ...nodeVals });
+    setRunning(false);
+  };
+  //===========================================================================
   return (
     <>
       <div className="h-96 md:w-[72vw] overflow-scroll border border-border flex flex-col items-start">
@@ -113,15 +130,26 @@ const BinaryTreeAnimation: FC<IBinaryTree> = () => {
           <Button
             variant="outline"
             className="w-32"
-            onClick={() => preOrderSelector(["root"], { ...nodeVals })}
+            onClick={preOrderHandler}
+            disabled={running}
           >
             Pre-Order
           </Button>
         </div>
-        <Button variant="secondary" className="w-32">
+        <Button
+          variant="secondary"
+          className="w-32"
+          disabled={running}
+          onClick={inOrderHandler}
+        >
           In-Order
         </Button>
-        <Button variant="destructive" className="w-32">
+        <Button
+          variant="destructive"
+          className="w-32"
+          disabled={running}
+          onClick={postOrderHandler}
+        >
           Post-Order
         </Button>
       </div>

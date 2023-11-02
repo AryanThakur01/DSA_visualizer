@@ -129,6 +129,12 @@ const LeftNavContent = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+          <Link
+            href="/binarytree"
+            className={pathname === "/binarytree" ? "text-primary" : ""}
+          >
+            Binary Tree
+          </Link>
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1" className="border-none">
               <AccordionTrigger className="p-0 hover:no-underline font-light">
