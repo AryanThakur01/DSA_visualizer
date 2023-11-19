@@ -139,6 +139,32 @@ const LeftNavContent = () => {
             <AccordionItem value="item-1" className="border-none">
               <AccordionTrigger className="p-0 hover:no-underline font-light">
                 <Link
+                  href="/heaps"
+                  className={pathname?.match("/heaps/*") ? "text-primary" : ""}
+                >
+                  Heap
+                </Link>
+              </AccordionTrigger>
+              <AccordionContent className="ml-4 pl-2 font-extralight">
+                <ul>
+                  <li className="my-2">
+                    <Link
+                      href="/heaps/minheap"
+                      className={
+                        pathname === "/heaps/minheap" ? "text-primary" : ""
+                      }
+                    >
+                      Min Heap
+                    </Link>
+                  </li>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1" className="border-none">
+              <AccordionTrigger className="p-0 hover:no-underline font-light">
+                <Link
                   href="/misc"
                   className={pathname?.match("/misc/*") ? "text-primary" : ""}
                 >

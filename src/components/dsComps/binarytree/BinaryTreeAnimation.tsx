@@ -1,22 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { FC, useEffect, useState } from "react";
 import { nodeActivator, nodeSelector } from "./handler-library";
+import BinaryTreeStructure, { INodeVals } from "@/components/BinaryTree";
 
-interface INodeVals {
-  value: number;
-  isActive?: boolean;
-  isSelected?: boolean;
-  nodeL?: INodeVals;
-  nodeR?: INodeVals;
-}
-interface IBinaryTree {}
+interface IBinaryTreeAnimation {}
 
-const BinaryTreeAnimation: FC<IBinaryTree> = () => {
+const BinaryTreeAnimation: FC<IBinaryTreeAnimation> = () => {
   // prettier-ignore
-  const [nodeVals, setNodeVals] = useState<INodeVals>({ value: 1, nodeL: { value: 2, nodeL: { value: 3, nodeL: { value: 4 }  }, nodeR: { value: 6, nodeL: { value: 7 }  }, }, nodeR: { value: 9, nodeL: { value: 10, nodeR: { value: 12 } }, }, });
+  const [nodeVals, setNodeVals] = useState<INodeVals>({ value: 1, nodeL: { value: 2, nodeL: { value: 3, nodeL: { value: 4 }, nodeR: {value:13}  }, nodeR: { value: 6  }, }, nodeR: { value: 9, nodeL: { value: 10, nodeR: { value: 12 } }, }, });
   const [preOrder, setPreOrder] = useState<number[]>([]);
   const [inOrder, setInOrder] = useState<number[]>([]);
   const [postOrder, setPostOrder] = useState<number[]>([]);
@@ -43,6 +36,7 @@ const BinaryTreeAnimation: FC<IBinaryTree> = () => {
     path.pop();
   };
   const preOrderHandler = async () => {
+    reset(nodes);
     setRunning(true);
     await preOrderSelector(["root"], { ...nodeVals });
     setRunning(false);
@@ -65,6 +59,7 @@ const BinaryTreeAnimation: FC<IBinaryTree> = () => {
     path.pop();
   };
   const inOrderHandler = async () => {
+    reset(nodes);
     setRunning(true);
     await inOrderSelector(["root"], { ...nodeVals });
     setRunning(false);
@@ -88,10 +83,16 @@ const BinaryTreeAnimation: FC<IBinaryTree> = () => {
   };
   const postOrderHandler = async () => {
     setRunning(true);
+    reset(nodes);
     await postOrderSelector(["root"], { ...nodeVals });
     setRunning(false);
   };
   //===========================================================================
+  const reset = async (nodes: INodeVals) => {
+    nodes.isSelected = false;
+    if (nodes.nodeL) reset(nodes.nodeL);
+    if (nodes.nodeR) reset(nodes.nodeR);
+  };
   return (
     <>
       <div className="h-96 md:w-[72vw] overflow-scroll border border-border flex flex-col items-start">
@@ -122,7 +123,8 @@ const BinaryTreeAnimation: FC<IBinaryTree> = () => {
           </div>
         </div>
         <div className="md:w-full scale-80 md:scale-100">
-          <Node nodeVals={nodeVals} />
+          <BinaryTreeStructure nodeVals={nodeVals} />
+          {/* <Node nodeVals={nodeVals} /> */}
         </div>
       </div>
       <div className="my-3 flex gap-3 flex-wrap">
@@ -152,65 +154,6 @@ const BinaryTreeAnimation: FC<IBinaryTree> = () => {
         >
           Post-Order
         </Button>
-      </div>
-    </>
-  );
-};
-
-interface INode {
-  nodeVals: INodeVals;
-}
-const Node: FC<INode> = ({ nodeVals }) => {
-  return (
-    <>
-      <div className="bg-opacity-100 py-[-3rem] flex flex-col gap-3">
-        <div className="flex justify-center items-center">
-          <div
-            className={cn(
-              "h-20 w-[1px] relative top-10",
-              nodeVals.nodeL && "bg-foreground",
-            )}
-          />
-          <hr
-            className={cn(
-              "w-[calc(25%-1rem)] border-transparent",
-              nodeVals?.nodeL && "border-foreground",
-            )}
-          />
-          <p
-            className={cn(
-              "border border-foreground text-center w-8 self-center rounded",
-              nodeVals.isActive ? "bg-destructive" : "",
-              nodeVals.isSelected ? "border-success text-success" : "",
-            )}
-          >
-            {nodeVals.value || " "}
-          </p>
-          <hr
-            className={cn(
-              "w-[calc(25%-1rem)] border-transparent",
-              nodeVals?.nodeR && "border-foreground",
-            )}
-          />
-          <div
-            className={cn(
-              "h-20 w-[1px] relative top-10",
-              nodeVals.nodeR && "bg-foreground",
-            )}
-          />
-        </div>
-        <div className="grid grid-cols-2 justify-center">
-          {nodeVals.nodeL ? (
-            <Node nodeVals={nodeVals.nodeL} />
-          ) : (
-            <div className="w-20" />
-          )}
-          {nodeVals.nodeR ? (
-            <Node nodeVals={nodeVals.nodeR} />
-          ) : (
-            <div className="w-20" />
-          )}
-        </div>
       </div>
     </>
   );

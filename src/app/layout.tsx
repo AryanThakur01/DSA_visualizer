@@ -21,24 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className + " bg-background"}>
-        <div className="container">
-          <Script src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" />
-          <Script id="google-analytics">
-            {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
- 
-          gtag('config', 'GA_MEASUREMENT_ID');
-        `}
-          </Script>
-        </div>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {/* Top Navigation Menu */}
           <header className="sticky top-0 w-full border-b border-border py-2 text-foreground z-50 bg-background flex items-center">
             <Nav />
