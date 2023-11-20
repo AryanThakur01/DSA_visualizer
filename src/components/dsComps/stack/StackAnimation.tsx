@@ -40,7 +40,7 @@ const StackAnimation: FC<IStackAnimation> = () => {
 
   // ---------------------------- JSX starts here
   return (
-    <div className="w-fit flex flex-col items-center my-9 gap-4">
+    <div className="w-fit flex flex-col items-center my-9 gap-4 mx-auto">
       <div className="w-fit flex flex-col gap-2">
         <div className="flex gap-1">
           <Input
