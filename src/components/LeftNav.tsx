@@ -157,6 +157,16 @@ const LeftNavContent = () => {
                       Min Heap
                     </Link>
                   </li>
+                  <li className="my-2">
+                    <Link
+                      href="/heaps/maxheap"
+                      className={
+                        pathname === "/heaps/maxheap" ? "text-primary" : ""
+                      }
+                    >
+                      Max Heap
+                    </Link>
+                  </li>
                 </ul>
               </AccordionContent>
             </AccordionItem>
