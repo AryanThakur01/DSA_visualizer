@@ -61,8 +61,8 @@ const StackPage: FC<IStackPage> = () => {
         <LLSectionTemplate>
           <h2 className="text-xl font-bold my-3">Applications:</h2>
           <ul>
-            {stackApplictaion.map((item) => (
-              <li>
+            {stackApplictaion.map((item, i) => (
+              <li key={"stack-" + i}>
                 <span className="min-w-[14rem] font-bold pr-3">
                   {item.title}:
                 </span>
