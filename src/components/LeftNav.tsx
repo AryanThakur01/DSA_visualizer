@@ -72,63 +72,13 @@ const LeftNavContent = () => {
             Stack
           </Link>
 
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="item-1" className="border-none">
-              <AccordionTrigger className="p-0 hover:no-underline font-light">
-                <Link
-                  href="/linkedlist"
-                  className={
-                    pathname?.match("/linkedlist") ? "text-primary" : ""
-                  }
-                >
-                  Linked List
-                </Link>
-                {/* LinkedList */}
-              </AccordionTrigger>
-              <AccordionContent className="ml-4 pl-2 font-extralight">
-                <ul>
-                  <li className="my-2">
-                    <Link
-                      href="/linkedlist#sll"
-                      className={
-                        pathname === "/linkedlist#sll" ? "text-primary" : ""
-                      }
-                    >
-                      Singly Linked Linear
-                    </Link>
-                  </li>
-                  <li className="my-2">
-                    <Link
-                      href="/linkedlist#cll"
-                      className={
-                        pathname === "/linkedlist#cll" ? "text-primary" : ""
-                      }
-                    >
-                      Singly Linked Circular
-                    </Link>
-                  </li>
-                  <li className="my-2">
-                    <Link
-                      href="/linkedlist#dll"
-                      className={pathname === "/doublyll" ? "text-primary" : ""}
-                    >
-                      Doubly Linked Linear
-                    </Link>
-                  </li>
-                  <li className="my-2">
-                    <Link
-                      href="/linkedlist#dcll"
-                      className={
-                        pathname === "/linkedlist#dcll" ? "text-primary" : ""
-                      }
-                    >
-                      Doubly Linked Circular
-                    </Link>
-                  </li>
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <Link
+            href="/linkedlist"
+            className={pathname?.match("/linkedlist") ? "text-primary" : ""}
+          >
+            Linked List
+          </Link>
+          {/* LinkedList */}
           <Link
             href="/binarytree"
             className={pathname === "/binarytree" ? "text-primary" : ""}
@@ -196,6 +146,13 @@ const LeftNavContent = () => {
             </AccordionItem>
           </Accordion>
         </div>
+        <h2 className="text-xl font-bold my-3">Algorithms</h2>
+        <Link
+          href="/binarysearch"
+          className={pathname === "/binarysearch" ? "text-primary" : ""}
+        >
+          Binary Search
+        </Link>
       </div>
     </>
   );
