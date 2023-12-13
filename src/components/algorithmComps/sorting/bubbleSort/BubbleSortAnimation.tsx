@@ -44,7 +44,7 @@ const BubbleSortAnimation = () => {
 
   return (
     <>
-      <div className="border border-border mt-6 p-1 min-h-[15rem]">
+      <div className="border border-border mt-6 p-1 min-h-[15rem] overflow-scroll">
         <div className="mb-4 min-h-[4rem]">
           <p
             className={cn(
