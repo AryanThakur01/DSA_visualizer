@@ -175,6 +175,18 @@ const LeftNavContent = () => {
                     Bubble Sort
                   </Link>
                 </li>
+                <li className="my-2">
+                  <Link
+                    href="/sorting/selectionsort"
+                    className={
+                      pathname === "/sorting/selectionsort"
+                        ? "text-primary"
+                        : ""
+                    }
+                  >
+                    Selection Sort
+                  </Link>
+                </li>
               </ul>
             </AccordionContent>
           </AccordionItem>

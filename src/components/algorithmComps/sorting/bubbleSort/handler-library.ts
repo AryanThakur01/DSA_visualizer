@@ -73,4 +73,8 @@ export const bubbleSort = async (
   for (let i = 0; i < arr.length; i++) {
     await nodeSelect(arr, setArray, i, 0.01, setStep);
   }
+  for (let i = 0; i < arr.length; i++) {
+    await nodeDeselector(arr, setArray, i, 0.01);
+  }
+  setStep(0);
 };
