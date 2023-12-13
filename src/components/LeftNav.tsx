@@ -35,7 +35,7 @@ const LeftNav: FC<ILeftNav> = () => {
           <MenuIcon
             className={cn(
               buttonVariants({ variant: "link" }),
-              "mx-2 p-1 absolute z-50 md:hidden top-2 right-0 cursor-pointer",
+              "mx-2 p-1 fixed z-50 md:hidden top-2 right-0 cursor-pointer",
             )}
           />
         </SheetTrigger>
