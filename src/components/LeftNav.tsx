@@ -153,6 +153,32 @@ const LeftNavContent = () => {
         >
           Binary Search
         </Link>
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1" className="border-none">
+            <AccordionTrigger className="p-0 hover:no-underline font-light">
+              <Link
+                href="/sorting"
+                className={pathname?.match("/sorting/*") ? "text-primary" : ""}
+              >
+                Sorting
+              </Link>
+            </AccordionTrigger>
+            <AccordionContent className="ml-4 pl-2 font-extralight">
+              <ul>
+                <li className="my-2">
+                  <Link
+                    href="/sorting/bubblesort"
+                    className={
+                      pathname === "/sorting/bubblesort" ? "text-primary" : ""
+                    }
+                  >
+                    Bubble Sort
+                  </Link>
+                </li>
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </>
   );
