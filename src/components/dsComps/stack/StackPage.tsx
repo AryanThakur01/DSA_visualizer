@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import Template, { LLSectionTemplate } from "../Template";
 import { Layers } from "lucide-react";
 import StackAnimation from "./StackAnimation";
-import Cprogramme from "./Cprogramme";
 
 interface IStackPage {}
 
@@ -60,17 +59,17 @@ const StackPage: FC<IStackPage> = () => {
         <StackAnimation />
         <LLSectionTemplate>
           <h2 className="text-xl font-bold my-3">Applications:</h2>
-          <ul>
+          <ul className="list-decimal pl-6 my-3">
             {stackApplictaion.map((item, i) => (
               <li key={"stack-" + i}>
                 <span className="min-w-[14rem] font-bold pr-3">
                   {item.title}:
                 </span>
-                {item.data}
+                <span className="text-foreground/60">{item.data}</span>
               </li>
             ))}
           </ul>
-          <p className="text-card-foreground">
+          <p className="text-card-foreground/60">
             In programming languages, a call stack is a specific type of stack
             that is used to keep track of function calls and their local
             variables. When a function is called, a new frame is pushed onto the
@@ -78,7 +77,6 @@ const StackPage: FC<IStackPage> = () => {
             the stack.
           </p>
         </LLSectionTemplate>
-        <Cprogramme />
       </Template>
     </>
   );
