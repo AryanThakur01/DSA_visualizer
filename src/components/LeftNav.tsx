@@ -187,6 +187,18 @@ const LeftNavContent = () => {
                     Selection Sort
                   </Link>
                 </li>
+                <li className="my-2">
+                  <Link
+                    href="/sorting/insertionsort"
+                    className={
+                      pathname === "/sorting/insertionsort"
+                        ? "text-primary"
+                        : ""
+                    }
+                  >
+                    Insertion Sort
+                  </Link>
+                </li>
               </ul>
             </AccordionContent>
           </AccordionItem>

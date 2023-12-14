@@ -19,7 +19,7 @@ const SelectionSortAnimation = () => {
   ];
   const [max, setMax] = useState<number>(0);
   const [negativeMax, setNegativeMax] = useState<number>(0);
-  const animSpeed = useRef(0.01);
+  const animSpeed = useRef(0.03);
 
   const insertElem = () => {
     let inpVal: number | string = input;

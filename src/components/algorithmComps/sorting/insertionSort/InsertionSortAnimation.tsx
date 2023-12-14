@@ -3,10 +3,10 @@ import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { IArray, bubbleSort, resetHandler } from "./handler-library";
+import { IArray, selectionSort, resetHandler } from "./handler-library";
 import { Slider } from "@/components/ui/slider";
 
-const BubbleSortAnimation = () => {
+const InsertionSortAnimation = () => {
   const [array, setArray] = useState<IArray[]>([]);
   const [input, setInput] = useState("");
   const [initialState, setInitialState] = useState<0 | 1 | 2 | 3>(0);
@@ -38,13 +38,13 @@ const BubbleSortAnimation = () => {
   };
   const SortingHandler = async () => {
     setPlaying(true);
-    await bubbleSort([...array], setArray, setInitialState, animSpeed);
+    await selectionSort([...array], setArray, setInitialState, animSpeed);
     setPlaying(false);
   };
-
   const deleteAllHandler = () => {
     setArray([]);
   };
+
   return (
     <>
       <div className="border border-border mt-6 p-1 min-h-[15rem] overflow-scroll">
@@ -78,9 +78,9 @@ const BubbleSortAnimation = () => {
                 </div>
                 <p
                   className={cn(
-                    "px-2 border border-border m-[1px] rounded-full",
+                    "px-2 border border-border m-[1px] rounded",
                     item.isActivated &&
-                      "bg-destructive/40 border-destructive shadow-destructive shadow-md translate-y-2",
+                      "bg-destructive/40 border-destructive shadow-destructive shadow-md",
                     item.isSelected &&
                       "bg-success/40 border-success shadow-success shadow-md",
                   )}
@@ -163,4 +163,4 @@ const BubbleSortAnimation = () => {
   );
 };
 
-export default BubbleSortAnimation;
+export default InsertionSortAnimation;
