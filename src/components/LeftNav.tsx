@@ -1,16 +1,13 @@
 "use client";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { buttonVariants } from "@/components/ui/button";
-import { MenuIcon } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { cn } from "@/lib/utils";
 import {
   Sheet,
   SheetContent,
@@ -20,8 +17,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-interface ILeftNav {}
-const LeftNav: FC<ILeftNav> = () => {
+interface ILeftNav {
+  children?: ReactNode;
+}
+const LeftNav: FC<ILeftNav> = ({ children }) => {
   return (
     <>
       {/* DESKTOP */}
@@ -32,12 +31,13 @@ const LeftNav: FC<ILeftNav> = () => {
       {/* MOBILE */}
       <Sheet>
         <SheetTrigger>
-          <MenuIcon
-            className={cn(
-              buttonVariants({ variant: "link" }),
-              "mx-2 p-1 fixed z-50 md:hidden top-2 right-0 cursor-pointer",
-            )}
-          />
+          {children}
+          {/* <MenuIcon */}
+          {/*   className={cn( */}
+          {/*     buttonVariants({ variant: "link" }), */}
+          {/*     "mx-2 p-1 fixed z-50 md:hidden top-2 right-0 cursor-pointer", */}
+          {/*   )} */}
+          {/* /> */}
         </SheetTrigger>
         <SheetContent className="min-w-fit border-r-border" side="left">
           <SheetHeader className="text-left">
