@@ -1,4 +1,5 @@
 import React, { FC, ReactNode } from "react";
+import StarSelector from "../StarSelector";
 
 interface IDsTemplate {
   title: string;
@@ -11,10 +12,13 @@ const Template: FC<IDsTemplate> = ({ title, icon, intro, children }) => {
   return (
     <>
       <article className="md:px-8">
-        <h1 className="font-bold text-2xl flex flex-row-reverse items-center gap-2 w-fit my-8">
-          {title}
-          {icon}
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className="font-bold text-2xl flex flex-row-reverse items-center gap-2 w-fit my-8">
+            {title}
+            {icon}
+          </h1>
+          <StarSelector />
+        </div>
         <p>{intro}</p>
       </article>
       {children}

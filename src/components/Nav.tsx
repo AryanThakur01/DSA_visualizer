@@ -4,12 +4,12 @@ import ThemeSelector, { SessionDropDown } from "./NavContents";
 import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth";
-import { options } from "@/app/api/auth/[...nextauth]/options";
+import { config } from "@/utils/auth";
 
 interface INav {}
 
 const Nav: FC<INav> = async () => {
-  const session = await getServerSession(options);
+  const session = await getServerSession(config);
   return (
     <>
       <div className="container h-10 flex items-center justify-between">
