@@ -2,8 +2,7 @@
 import { useTheme } from "next-themes";
 import { FC, ReactNode } from "react";
 import { Button } from "./ui/button";
-import { MoonIcon, SunIcon } from "lucide-react";
-import { Cloud, LogOut } from "lucide-react";
+import { Home, MoonIcon, SunIcon, User, LogOut } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface IThemeSelector {}
 
@@ -32,6 +32,7 @@ interface ISessionDropDown {
   children: ReactNode;
 }
 export const SessionDropDown: FC<ISessionDropDown> = ({ children }) => {
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,8 +40,20 @@ export const SessionDropDown: FC<ISessionDropDown> = ({ children }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuItem disabled>
-          <Cloud className="mr-2 h-4 w-4" />
+        <DropdownMenuItem
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          <Home className="mr-2 h-4 w-4" />
+          <span>Home</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            router.push("/profile");
+          }}
+        >
+          <User className="mr-2 h-4 w-4" />
           <span>Profile</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

@@ -5,8 +5,6 @@ import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import { MenuIcon } from "lucide-react";
-import LeftNav from "./LeftNav";
 
 interface INav {}
 
