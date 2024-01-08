@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// USER SCHEMAS
 model Account {
   id                       String  @id @default(cuid())
   userId                   String  @map("user_id")
@@ -42,13 +43,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id                   String                 @id @default(cuid())
+  name                 String?
+  email                String?                @unique
+  emailVerified        DateTime?              @map("email_verified")
+  image                String?
+  accounts             Account[]
+  sessions             Session[]
+  starredVisualization StarredVisualization[]
 
   @@map("users")
 }
@@ -60,4 +62,15 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+// STARRED VISUALIZATIONS
+model StarredVisualization {
+  id         String @id @default(cuid())
+  visualName String
+  pageLink   String
+  userId     String
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([visualName, userId])
 }

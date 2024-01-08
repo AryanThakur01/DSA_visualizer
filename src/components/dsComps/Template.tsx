@@ -1,5 +1,9 @@
 import React, { FC, ReactNode } from "react";
 import StarSelector from "../StarSelector";
+import { auth } from "@/utils/auth";
+import { PrismaClient } from "@prisma/client";
+import { cookies } from "next/headers";
+import { JWTDecodeParams, decode } from "next-auth/jwt";
 
 interface IDsTemplate {
   title: string;
@@ -8,7 +12,29 @@ interface IDsTemplate {
   children: ReactNode;
 }
 
-const Template: FC<IDsTemplate> = ({ title, icon, intro, children }) => {
+const prisma = new PrismaClient();
+const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
+  const session = await auth();
+  let starred = false;
+
+  await (async () => {
+    const cookie = cookies().get("next-auth.session-token");
+    if (!session || !cookie || !process.env.NEXTAUTH_SECRET) return;
+    const key: JWTDecodeParams = {
+      token: cookie.value,
+      secret: process.env.NEXTAUTH_SECRET,
+    };
+    const user = await decode(key);
+    if (!user) return;
+
+    const searching = await prisma.starredVisualization.findFirst({
+      where: {
+        visualName: title,
+        userId: user.sub || "",
+      },
+    });
+    if (searching) starred = true;
+  })();
   return (
     <>
       <article className="md:px-8">
@@ -17,7 +43,7 @@ const Template: FC<IDsTemplate> = ({ title, icon, intro, children }) => {
             {title}
             {icon}
           </h1>
-          <StarSelector />
+          <StarSelector title={title} isStarred={starred} />
         </div>
         <p>{intro}</p>
       </article>

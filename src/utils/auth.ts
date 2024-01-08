@@ -7,6 +7,7 @@ import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+// import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 const prisma = new PrismaClient();
@@ -24,6 +25,14 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET || "",
     }),
   ],
+  callbacks: {
+    jwt: async ({ token }) => {
+      return token;
+    },
+    session: async ({ session, token, user }) => {
+      return session;
+    },
+  },
 };
 
 // You'll need to import and pass this
