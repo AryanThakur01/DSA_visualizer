@@ -4,7 +4,11 @@ import { JWTDecodeParams, decode } from "next-auth/jwt";
 
 const prisma = new PrismaClient();
 const cookieToPayload = async (req: NextRequest) => {
-  const cookie = req.cookies.get("next-auth.session-token");
+  const cookie = req.cookies.get(
+    process.env.NODE_ENV === "production"
+      ? "__Secure-next-auth.session-token"
+      : "next-auth.session-token",
+  );
   const key: JWTDecodeParams = {
     token: cookie?.value,
     secret: process.env.NEXTAUTH_SECRET || "",
