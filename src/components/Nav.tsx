@@ -29,9 +29,11 @@ const Nav: FC<INav> = async () => {
           ) : (
             <SessionDropDown>
               <Image
+                width={32}
+                height={24}
                 src={session.user?.image || ""}
                 alt={(session.user?.name || "")[0]}
-                className="h-8 rounded-full cursor-pointer flex items-center text-xl"
+                className="rounded-full cursor-pointer flex items-center text-xl"
               />
             </SessionDropDown>
           )}

@@ -1,3 +1,4 @@
+// DATABASE_URL="postgresql://postgres:2008@localhost:5432/dsa?schema=dsaSchema"
 "use client";
 import Link from "next/link";
 import { FC, ReactNode } from "react";
@@ -47,9 +48,7 @@ const LeftNav: FC<ILeftNav> = ({ children }) => {
               </Link>
             </SheetTitle>
             <hr className="border-border" />
-            <SheetDescription>
-              <LeftNavContent />
-            </SheetDescription>
+            <LeftNavContent />
           </SheetHeader>
         </SheetContent>
       </Sheet>
