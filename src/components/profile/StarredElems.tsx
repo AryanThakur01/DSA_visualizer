@@ -49,7 +49,7 @@ const StarredElems: FC<IStarredElems> = () => {
             <th>Delete</th>
           </tr>
           {starred.map((item, id) => (
-            <tr id={"Stars" + id} className="grid grid-cols-3 gap-16">
+            <tr key={"Stars" + id} className="grid grid-cols-3 gap-16">
               <td className="flex items-center">{item.visualName}</td>
               <td className="flex items-center justify-center">
                 <Link

@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import { Star } from "lucide-react";
 import { JWTDecodeParams, decode } from "next-auth/jwt";
 import { cookies } from "next/headers";
+import Image from "next/image";
 import React from "react";
 
 const prisma = new PrismaClient();
@@ -30,7 +31,7 @@ const page = async () => {
     <div className="container py-5">
       <div className="flex justify-center p-5">
         <div>
-          <img
+          <Image
             src={session?.user?.image || ""}
             alt={session?.user?.name || ""}
             className="h-20 rounded-full mx-10 my-2"

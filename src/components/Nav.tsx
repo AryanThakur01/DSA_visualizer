@@ -5,6 +5,7 @@ import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { config } from "@/utils/auth";
+import Image from "next/image";
 
 interface INav {}
 
@@ -27,7 +28,7 @@ const Nav: FC<INav> = async () => {
             </Link>
           ) : (
             <SessionDropDown>
-              <img
+              <Image
                 src={session.user?.image || ""}
                 alt={(session.user?.name || "")[0]}
                 className="h-8 rounded-full cursor-pointer flex items-center text-xl"
