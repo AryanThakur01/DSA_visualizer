@@ -21,13 +21,13 @@ const StarSelector: FC<IStarSelector> = ({ title, isStarred }) => {
       let res: Response;
       const body = { visualName: title, pageLink: window.location.pathname };
       if (!star) {
-        res = await fetch(process.env.NEXTAUTH_URL + "/api/save", {
+        res = await fetch("/api/save", {
           method: "POST",
           body: JSON.stringify(body),
         });
         stateDispatcher(starInc());
       } else {
-        res = await fetch(process.env.NEXTAUTH_URL + "/api/save", {
+        res = await fetch("/api/save", {
           method: "DELETE",
           body: title,
         });
