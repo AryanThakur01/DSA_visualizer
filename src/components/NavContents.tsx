@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/redux/hooks";
+import { cn } from "@/lib/utils";
 
 interface IThemeSelector {}
 
@@ -32,11 +34,23 @@ interface ISessionDropDown {
   children: ReactNode;
 }
 export const SessionDropDown: FC<ISessionDropDown> = ({ children }) => {
+  const stars = useAppSelector((state) => state.StarSlice.starCount);
   const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost">{children}</Button>
+        <Button variant="ghost">
+          {children}
+          <span
+            className={cn(
+              stars <= 0
+                ? "hidden"
+                : "bg-destructive rounded-full h-4 w-4 text-center text-xs absolute mb-5 ml-4",
+            )}
+          >
+            {stars}
+          </span>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -55,6 +69,15 @@ export const SessionDropDown: FC<ISessionDropDown> = ({ children }) => {
         >
           <User className="mr-2 h-4 w-4" />
           <span>Profile</span>
+          <span
+            className={cn(
+              stars <= 0
+                ? "hidden"
+                : "bg-destructive rounded-full h-4 w-4 text-center text-xs relative bottom-1 right-1",
+            )}
+          >
+            {stars}
+          </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

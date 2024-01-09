@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import StarSlice from "./slices/StarSlice";
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {},
+    reducer: { StarSlice },
   });
 };
 

@@ -13,10 +13,17 @@ const cookieToPayload = async (req: NextRequest) => {
 };
 
 export const GET = async (req: NextRequest) => {
-  return NextResponse.json(
-    { message: "this is for testing route" },
-    { status: 200 },
-  );
+  try {
+    const payload = await cookieToPayload(req);
+    const res = await prisma.starredVisualization.findMany({
+      where: {
+        userId: payload?.sub,
+      },
+    });
+    return new NextResponse(JSON.stringify(res));
+  } catch (error) {
+    return new NextResponse(JSON.stringify(error), { status: 500 });
+  }
 };
 
 export const POST = async (req: NextRequest) => {
@@ -28,7 +35,7 @@ export const POST = async (req: NextRequest) => {
     });
     return new NextResponse(JSON.stringify(res));
   } catch (error) {
-    return new NextResponse(JSON.stringify(error));
+    return new NextResponse(JSON.stringify(error), { status: 500 });
   }
 };
 
@@ -44,6 +51,6 @@ export const DELETE = async (req: NextRequest) => {
     });
     return new NextResponse(JSON.stringify(res));
   } catch (error) {
-    return new NextResponse(JSON.stringify(error));
+    return new NextResponse(JSON.stringify(error), { status: 500 });
   }
 };

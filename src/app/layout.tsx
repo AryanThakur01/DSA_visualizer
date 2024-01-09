@@ -4,6 +4,7 @@ import "./layout.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Nav from "@/components/Nav";
+import ReduxProvider from "@/redux/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className + " bg-background"}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          {/* Top Navigation Menu */}
-          <header className="sticky top-0 w-full border-b border-border py-2 text-foreground z-50 bg-background flex items-center">
-            <Nav />
-          </header>
+        <ReduxProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            {/* Top Navigation Menu */}
+            <header className="sticky top-0 w-full border-b border-border py-2 text-foreground z-50 bg-background flex items-center">
+              <Nav />
+            </header>
 
-          {/* Main Contents */}
-          <main className="flex min-h-[80vh]">{children}</main>
-        </ThemeProvider>
+            {/* Main Contents */}
+            <main className="flex min-h-[80vh]">{children}</main>
+          </ThemeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
