@@ -18,18 +18,30 @@ const cookieToPayload = async (req: NextRequest) => {
   return await decode(key);
 };
 
+// Get A Review
+export const GET = async (req: NextRequest) => {
+  try {
+    const payload = await cookieToPayload(req);
+    if (!payload) throw new Error("Session Not Found");
+    const res = await prisma.reviews.findMany({
+      include: { writer: true },
+    });
+    return new NextResponse(JSON.stringify(res));
+  } catch (error) {
+    console.log(error);
+    return new NextResponse(JSON.stringify(error), { status: 500 });
+  }
+};
+
 // Create A Review
 export const POST = async (req: NextRequest) => {
-  console.log("============== WRITE REVIEW ===================");
   try {
     const payload = await cookieToPayload(req);
     if (!payload) throw new Error("Session Not Found");
     const data = await req.json();
-    console.log({ ...data, writerId: payload?.sub });
     const res = await prisma.reviews.create({
       data: { ...data, writerId: payload.sub },
     });
-    console.log(res);
     return new NextResponse(JSON.stringify(res));
   } catch (error) {
     console.log(error);

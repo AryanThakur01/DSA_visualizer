@@ -4,15 +4,37 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface IReviews {
   title: string;
+}
+interface IReviewList {
+  id: string;
+  review: string;
+  visualName: string;
+  pageLink: string;
+  writerId: string;
+  writer: IWriter;
+}
+interface IWriter {
+  name: string;
+  email: string;
+  image: string;
 }
 
 const Reviews: FC<IReviews> = ({ title }) => {
   const [write, setWrite] = useState(false);
   const [writing, setWriting] = useState(false);
+  const [reviewList, setReviewList] = useState<Array<IReviewList>>();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const getReviews = async () => {
+    let res: Response = await fetch("/api/reviews", {
+      method: "GET",
+    });
+    setReviewList(await res.json());
+  };
 
   // Feature to write a review
   const writeReview = async () => {
@@ -31,7 +53,8 @@ const Reviews: FC<IReviews> = ({ title }) => {
       method: "POST",
       body: JSON.stringify(body),
     });
-    console.log(res.json());
+    console.log(await res.json());
+    getReviews();
     setWriting(false);
   };
   useEffect(() => {
@@ -39,10 +62,13 @@ const Reviews: FC<IReviews> = ({ title }) => {
       inputRef.current?.focus();
     }
   }, [write]);
+  useEffect(() => {
+    getReviews();
+  }, []);
   return (
     <>
       <h2 className="text-2xl font-bold mb-4">Reviews</h2>
-      <div className="flex justify-between flex-wrap gap-4">
+      <div className="flex justify-between flex-wrap gap-4 mb-4">
         <div className="flex items-center gap-4 flex-wrap">
           <div className="flex gap-1">
             <Star height={20} className="fill-yellow-300 stroke-yellow-300" />
@@ -84,6 +110,29 @@ const Reviews: FC<IReviews> = ({ title }) => {
           )}
         </Button>
       </div>
+      {/* {JSON.stringify(reviewList)} */}
+      {reviewList?.map((message) => (
+        <div key={message.id}>
+          <div className="flex gap-4">
+            <Image
+              height={50}
+              width={50}
+              src={message.writer.image}
+              className="rounded-full h-8 w-8 relative top-1"
+              alt={message.writer.name[0]}
+            />
+            <div>
+              <p className="font-bold">{message.writer.name}</p>
+              <p className="text-muted-foreground text-xs">
+                {message.writer.email}
+              </p>
+              <p className="text-sm mt-2 mb-8 text-muted-foreground italic">
+                "{message.review}"
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
     </>
   );
 };
