@@ -1,11 +1,13 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import Template, { LLSectionTemplate } from "../Template";
 import { Layers } from "lucide-react";
 import StackAnimation from "./StackAnimation";
 
-interface IStackPage {}
+interface IStackPage {
+  children: ReactNode;
+}
 
-const StackPage: FC<IStackPage> = () => {
+const StackPage: FC<IStackPage> = ({ children }) => {
   const stackApplictaion = [
     {
       title: "Function Call Management",
@@ -77,6 +79,7 @@ const StackPage: FC<IStackPage> = () => {
             the stack.
           </p>
         </LLSectionTemplate>
+        {children}
       </Template>
     </>
   );

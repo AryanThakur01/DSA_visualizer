@@ -4,6 +4,7 @@ import { auth } from "@/utils/auth";
 import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
 import { JWTDecodeParams, decode } from "next-auth/jwt";
+import Reviews from "../Reviews";
 
 interface IDsTemplate {
   title: string;
@@ -23,9 +24,6 @@ const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
         ? "next-auth.session-token"
         : "__Secure-next-auth.session-token",
     );
-    console.log("Session: ", session);
-    console.log("cookie: ", cookie);
-    console.log("Secret: ", process.env.NEXTAUTH_SECRET);
     if (!session || !cookie || !process.env.NEXTAUTH_SECRET) return;
     const key: JWTDecodeParams = {
       token: cookie.value,
@@ -41,7 +39,6 @@ const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
       },
     });
     if (searching) starred = true;
-    console.log("Starred: ", starred);
   })();
   return (
     <>
@@ -56,6 +53,9 @@ const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
         <p>{intro}</p>
       </article>
       {children}
+      <LLSectionTemplate>
+        <Reviews title={title} />
+      </LLSectionTemplate>
     </>
   );
 };

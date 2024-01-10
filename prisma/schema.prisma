@@ -6,9 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING") 
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 // USER SCHEMAS
@@ -52,6 +52,7 @@ model User {
   accounts             Account[]
   sessions             Session[]
   starredVisualization StarredVisualization[]
+  reviews              Reviews[]
 
   @@map("users")
 }
@@ -74,4 +75,14 @@ model StarredVisualization {
   user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([visualName, userId])
+}
+
+// Reviews
+model Reviews {
+  id         String @id @default(cuid())
+  review     String
+  visualName String
+  pageLink   String
+  writerId   String
+  writer     User   @relation(fields: [writerId], references: [id], onDelete: Cascade)
 }

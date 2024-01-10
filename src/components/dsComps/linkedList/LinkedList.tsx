@@ -1,12 +1,13 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import Template, { LLSectionTemplate } from "../Template";
 import { AlignVerticalSpaceAround } from "lucide-react";
 import LinearLLAnimation from "./LinearLLAnimation";
-import CircularLLAnimation from "./CircularLLAnimation";
 
-interface ILinearLL {}
+interface ILinearLL {
+  children: ReactNode;
+}
 
-const LinearLL: FC<ILinearLL> = () => {
+const LinearLL: FC<ILinearLL> = ({ children }) => {
   return (
     <>
       <Template
@@ -17,6 +18,7 @@ const LinearLL: FC<ILinearLL> = () => {
         <LLSectionTemplate>
           <LinearLLAnimation />
         </LLSectionTemplate>
+        {children}
       </Template>
     </>
   );
