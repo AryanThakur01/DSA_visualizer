@@ -28,10 +28,7 @@ const StarredElems: FC<IStarredElems> = () => {
     setUploading(index);
     try {
       let res: Response;
-      res = await fetch(
-        process.env.NEXTAUTH_URL || "http://localhost:3000" + "/api/save",
-        { method: "DELETE", body: elem },
-      );
+      res = await fetch("/api/save", { method: "DELETE", body: elem });
       res = await res.json();
     } catch (error) {
       console.log(error);

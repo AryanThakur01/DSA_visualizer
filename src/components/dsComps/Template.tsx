@@ -24,8 +24,10 @@ const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
       token: cookie.value,
       secret: process.env.NEXTAUTH_SECRET,
     };
+    console.log("Key: ", key);
     const user = await decode(key);
     if (!user) return;
+    console.log("User: ", user);
 
     const searching = await prisma.starredVisualization.findFirst({
       where: {
@@ -33,7 +35,9 @@ const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
         userId: user.sub || "",
       },
     });
+    console.log("Searching: ", searching);
     if (searching) starred = true;
+    console.log("Starred: ", starred);
   })();
   return (
     <>
