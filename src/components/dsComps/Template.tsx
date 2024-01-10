@@ -18,16 +18,21 @@ const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
   let starred = false;
 
   await (async () => {
-    const cookie = cookies().get("next-auth.session-token");
+    const cookie = cookies().get(
+      process.env.NODE_ENV === "development"
+        ? "next-auth.session-token"
+        : "__Secure-next-auth.session-token",
+    );
+    console.log("Session: ", session);
+    console.log("cookie: ", cookie);
+    console.log("Secret: ", process.env.NEXTAUTH_SECRET);
     if (!session || !cookie || !process.env.NEXTAUTH_SECRET) return;
     const key: JWTDecodeParams = {
       token: cookie.value,
       secret: process.env.NEXTAUTH_SECRET,
     };
-    console.log("Key: ", key);
     const user = await decode(key);
     if (!user) return;
-    console.log("User: ", user);
 
     const searching = await prisma.starredVisualization.findFirst({
       where: {
@@ -35,7 +40,6 @@ const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
         userId: user.sub || "",
       },
     });
-    console.log("Searching: ", searching);
     if (searching) starred = true;
     console.log("Starred: ", starred);
   })();
