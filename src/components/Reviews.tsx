@@ -1,11 +1,19 @@
 "use client";
-import { Loader, Send, Star } from "lucide-react";
+import { Loader2, Send, Star } from "lucide-react";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 interface IReviews {
   title: string;
 }
@@ -15,6 +23,7 @@ interface IReviewList {
   visualName: string;
   pageLink: string;
   writerId: string;
+  stars: number;
   writer: IWriter;
 }
 interface IWriter {
@@ -24,20 +33,23 @@ interface IWriter {
 }
 
 const Reviews: FC<IReviews> = ({ title }) => {
-  const [write, setWrite] = useState(false);
   const [writing, setWriting] = useState(false);
-  const [reviewList, setReviewList] = useState<Array<IReviewList>>();
+  const [reviewList, setReviewList] = useState<Array<IReviewList>>([]);
+  const [reviewsLoading, setReviewsLoading] = useState(false);
+  const [avgStar, setAvgStar] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const getReviews = async () => {
-    let res: Response = await fetch("/api/reviews", {
+    setReviewsLoading(true);
+    let res: Response = await fetch(`/api/reviews?visualName=${title}`, {
       method: "GET",
     });
     setReviewList(await res.json());
+    setReviewsLoading(false);
   };
 
   // Feature to write a review
-  const writeReview = async () => {
+  const writeReview = async (stars: number) => {
     setWriting(true);
     if (!inputRef.current) return;
     let message = inputRef.current.value;
@@ -48,6 +60,7 @@ const Reviews: FC<IReviews> = ({ title }) => {
       review: message,
       visualName: title,
       pageLink: window.location.pathname,
+      stars,
     };
     let res: Response = await fetch("/api/reviews", {
       method: "POST",
@@ -58,10 +71,11 @@ const Reviews: FC<IReviews> = ({ title }) => {
     setWriting(false);
   };
   useEffect(() => {
-    if (write) {
-      inputRef.current?.focus();
-    }
-  }, [write]);
+    const len = reviewList.length;
+    let starTotal = 0;
+    for (let i = 0; i < len; i++) starTotal += reviewList[i].stars;
+    setAvgStar(starTotal / reviewList.length);
+  }, [reviewList]);
   useEffect(() => {
     getReviews();
   }, []);
@@ -71,46 +85,37 @@ const Reviews: FC<IReviews> = ({ title }) => {
       <div className="flex justify-between flex-wrap gap-4 mb-4">
         <div className="flex items-center gap-4 flex-wrap">
           <div className="flex gap-1">
-            <Star height={20} className="fill-yellow-300 stroke-yellow-300" />
-            <Star height={20} className="fill-yellow-300 stroke-yellow-300" />
-            <Star height={20} className="fill-yellow-300 stroke-yellow-300" />
-            <Star height={20} className="fill-yellow-300 stroke-yellow-300" />
-            <Star height={20} className="fill-yellow-300 stroke-yellow-300" />
+            {Array.apply(null, Array(5)).map((_, index) => {
+              if (index < avgStar)
+                return (
+                  <Star
+                    height={20}
+                    className="fill-yellow-300 stroke-yellow-300"
+                    key={"Rating-" + index}
+                  />
+                );
+              return <Star height={20} key={"Rating-" + index} />;
+            })}
+            {/* <Star height={20} className="fill-yellow-300 stroke-yellow-300" /> */}
+            {/* <Star height={20} className="fill-yellow-300 stroke-yellow-300" /> */}
+            {/* <Star height={20} className="fill-yellow-300 stroke-yellow-300" /> */}
+            {/* <Star height={20} className="fill-yellow-300 stroke-yellow-300" /> */}
           </div>
-          <span className="text-muted-foreground">Based on 10 reviews</span>
+          <span className="text-muted-foreground">
+            Based on {reviewList.length} reviews
+          </span>
         </div>
-        <Button
-          className="rounded-full text-sm"
-          variant="outline"
-          onClick={() => {
-            setWrite(!write);
-          }}
-        >
-          Write a review
-        </Button>
-      </div>
-      <div className={cn("my-8 flex items-center", !write && "hidden")}>
-        <Input
-          placeholder="Enter Your Review"
-          className="border-transparent border-b-2 border-b-border w-full focus-visible:ring-transparent focus-visible:border-b-primary"
-          ref={inputRef}
+        <ReviewDialog
+          inputRef={inputRef}
+          writeReview={writeReview}
+          writing={writing}
         />
-        <Button
-          className="rounded-full text-white w-24 text-center"
-          onClick={writeReview}
-          disabled={writing}
-        >
-          {writing ? (
-            <Loader className="animate-spin" />
-          ) : (
-            <>
-              <span>Send</span>
-              <Send height={16} />
-            </>
-          )}
-        </Button>
       </div>
-      {/* {JSON.stringify(reviewList)} */}
+      {!reviewsLoading && reviewList.length === 0 && (
+        <p className="text-muted-foreground text-center my-8">
+          No Comments Found
+        </p>
+      )}
       {reviewList?.map((message) => (
         <div key={message.id}>
           <div className="flex gap-4">
@@ -133,7 +138,103 @@ const Reviews: FC<IReviews> = ({ title }) => {
           </div>
         </div>
       ))}
+
+      {reviewsLoading && <Loader2 className="animate-spin mx-auto" />}
     </>
+  );
+};
+
+interface IReviewDialog {
+  inputRef: React.RefObject<HTMLInputElement>;
+  writeReview: (stars: number) => {};
+  writing: boolean;
+}
+const ReviewDialog: FC<IReviewDialog> = ({
+  inputRef,
+  writeReview,
+  writing,
+}) => {
+  const [star, setStar] = useState(0);
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="rounded-full text-sm"
+          disabled={writing}
+        >
+          {writing ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            <span>Write a review</span>
+          )}
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px] border-border shadow-xl">
+        <DialogHeader>
+          <DialogTitle>Write a Review</DialogTitle>
+        </DialogHeader>
+        <div className="flex gap-1 mt-8">
+          <Star
+            height={20}
+            className={cn(
+              star >= 1 && "cursor-pointer stroke-yellow-300 fill-yellow-300",
+            )}
+            onMouseOver={() => setStar(1)}
+          />
+          <Star
+            height={20}
+            className={cn(
+              star >= 2 && "cursor-pointer stroke-yellow-300 fill-yellow-300",
+            )}
+            onMouseOver={() => setStar(2)}
+          />
+          <Star
+            height={20}
+            className={cn(
+              star >= 3 && "cursor-pointer stroke-yellow-300 fill-yellow-300",
+            )}
+            onMouseOver={() => setStar(3)}
+          />
+          <Star
+            height={20}
+            className={cn(
+              star >= 4 && "cursor-pointer stroke-yellow-300 fill-yellow-300",
+            )}
+            onMouseOver={() => setStar(4)}
+          />
+          <Star
+            height={20}
+            className={cn(
+              star >= 5 && "cursor-pointer stroke-yellow-300 fill-yellow-300",
+            )}
+            onMouseOver={() => setStar(5)}
+          />
+        </div>
+        <div className="grid gap-4">
+          <div className={cn("flex items-center")}>
+            <Input
+              placeholder="Enter Your Review"
+              className="border-transparent border-b-2 border-b-border w-full focus-visible:ring-transparent focus-visible:border-b-primary"
+              ref={inputRef}
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button
+              className="rounded-full text-white w-24 text-center"
+              onClick={() => {
+                if (star) writeReview(star);
+              }}
+            >
+              <span>Send</span>
+              <Send height={16} />
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

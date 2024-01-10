@@ -29,13 +29,13 @@
     "next": "13.5.4",
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",
+    "prisma": "^5.7.1",
     "react": "^18",
     "react-dom": "^18",
     "react-redux": "^9.0.4",
     "sass": "^1.69.3",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7",
-    "prisma": "^5.7.1"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",

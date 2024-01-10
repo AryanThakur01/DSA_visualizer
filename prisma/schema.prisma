@@ -84,5 +84,6 @@ model Reviews {
   visualName String
   pageLink   String
   writerId   String
+  stars      Int
   writer     User   @relation(fields: [writerId], references: [id], onDelete: Cascade)
 }

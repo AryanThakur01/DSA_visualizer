@@ -21,10 +21,13 @@ const cookieToPayload = async (req: NextRequest) => {
 // Get A Review
 export const GET = async (req: NextRequest) => {
   try {
-    const payload = await cookieToPayload(req);
-    if (!payload) throw new Error("Session Not Found");
+    const url = new URL(req.url);
+    const visualName = url.searchParams.get("visualName");
     const res = await prisma.reviews.findMany({
       include: { writer: true },
+      where: {
+        visualName: visualName || "",
+      },
     });
     return new NextResponse(JSON.stringify(res));
   } catch (error) {

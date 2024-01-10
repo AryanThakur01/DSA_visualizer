@@ -14,7 +14,7 @@ const CodeBlock: FC<ICprogramme> = ({ children }) => {
       {/*   Github */}
       {/* </Link> */}
       <LLSectionTemplate>
-        <div className="border border-border rounded-md px-2 background-card shadow-sm bg-muted">
+        <div className="border border-border rounded-md px-2 shadow-sm bg-primary/5">
           <pre className="max-h-[80vh] max-w-full overflow-scroll">
             {children}
           </pre>
