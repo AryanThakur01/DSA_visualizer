@@ -127,7 +127,7 @@ const Reviews: FC<IReviews> = ({ title }) => {
                 {message.writer.email}
               </p>
               <p className="text-sm mt-2 mb-8 text-muted-foreground italic">
-                "{message.review}"
+                &quot;{message.review}&quot;
               </p>
             </div>
           </div>
