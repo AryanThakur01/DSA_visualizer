@@ -8,13 +8,13 @@ const page: FC<IPage> = () => {
     {
       title: "Min Heap",
       description:
-        "A Min-Heap is defined as a type of Heap Data Structure in which each internal node is smaller than or equal to its children. The heap data structure is a type of binary tree that is commonly used in computer science for various purposes, including sorting, searching, and organizing data.",
+        "A Min Heap is a specialized binary heap data structure in which the value of each node is less than or equal to the values of its children, ensuring the minimum element is at the root.",
       pageLink: "/heaps/minheap",
     },
     {
       title: "Max Heap",
       description:
-        "A max heap is a complete binary tree in which the value of a node is greater than or equal to the values of its children. Max Heap data structure is useful for sorting data using heap sort.",
+        "A Max Heap is a binary heap where the value of each node is greater than or equal to the values of its children, ensuring the maximum element is at the root.",
       pageLink: "/heaps/maxheap",
     },
   ];
@@ -23,7 +23,6 @@ const page: FC<IPage> = () => {
       {subAnimations.map((heaps) => (
         <SubAnimationCards {...heaps} />
       ))}
-      {/* This is the heaps home */}
     </div>
   );
 };

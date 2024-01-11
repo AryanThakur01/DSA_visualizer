@@ -43,7 +43,7 @@ const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
     <>
       <article className="md:px-8">
         <div className="flex justify-between items-center">
-          <h1 className="font-bold text-2xl flex flex-row-reverse items-center gap-2 w-fit my-8">
+          <h1 className="font-bold text-xl md:text-2xl flex flex-row-reverse items-center gap-2 w-fit my-8">
             {title}
             {icon}
           </h1>

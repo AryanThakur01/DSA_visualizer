@@ -11,6 +11,7 @@ import {
 import { usePathname, useSearchParams } from "next/navigation";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -31,15 +32,7 @@ const LeftNav: FC<ILeftNav> = ({ children }) => {
       </aside>
       {/* MOBILE */}
       <Sheet>
-        <SheetTrigger>
-          {children}
-          {/* <MenuIcon */}
-          {/*   className={cn( */}
-          {/*     buttonVariants({ variant: "link" }), */}
-          {/*     "mx-2 p-1 fixed z-50 md:hidden top-2 right-0 cursor-pointer", */}
-          {/*   )} */}
-          {/* /> */}
-        </SheetTrigger>
+        <SheetTrigger>{children}</SheetTrigger>
         <SheetContent className="min-w-fit border-r-border" side="left">
           <SheetHeader className="text-left">
             <SheetTitle>

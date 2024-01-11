@@ -23,6 +23,7 @@ const ThemeSelector: FC<IThemeSelector> = () => {
   return (
     <Button
       variant="ghost"
+      className="px-2 md:px-4"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
       {theme === "light" ? <SunIcon /> : <MoonIcon />}
@@ -39,7 +40,7 @@ export const SessionDropDown: FC<ISessionDropDown> = ({ children }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" className="px-2 md:px-4">
           {children}
           <span
             className={cn(

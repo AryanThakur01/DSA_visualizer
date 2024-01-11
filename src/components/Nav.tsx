@@ -17,7 +17,7 @@ const Nav: FC<INav> = async () => {
         <Link href="/" className="md:text-xl text-sm font-bold">
           dsa/visualizer
         </Link>
-        <div className="grid grid-cols-2 gap-1">
+        <div className="flex justify-end gap-1 mr-4">
           <ThemeSelector />
           {!session ? (
             <Link
