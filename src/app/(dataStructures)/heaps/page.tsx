@@ -21,7 +21,7 @@ const page: FC<IPage> = () => {
   return (
     <div className="grid md:grid-cols-2 2xl: grid-cols-3 gap-4">
       {subAnimations.map((heaps) => (
-        <SubAnimationCards {...heaps} />
+        <SubAnimationCards {...heaps} key={heaps.title} />
       ))}
     </div>
   );

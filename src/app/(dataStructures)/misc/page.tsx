@@ -14,8 +14,8 @@ const page: FC<IMiscellaneous> = () => {
   ];
   return (
     <div className="grid md:grid-cols-2 2xl: grid-cols-3 gap-4">
-      {subAnimations.map((heaps) => (
-        <SubAnimationCards {...heaps} />
+      {subAnimations.map((misc) => (
+        <SubAnimationCards {...misc} key={misc.title} />
       ))}
     </div>
   );
