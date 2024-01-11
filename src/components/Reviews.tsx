@@ -1,7 +1,7 @@
 "use client";
 import { Loader2, Send, Star } from "lucide-react";
 import React, { FC, useEffect, useRef, useState } from "react";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -14,6 +14,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 interface IReviews {
   title: string;
 }
@@ -38,6 +42,8 @@ const Reviews: FC<IReviews> = ({ title }) => {
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [avgStar, setAvgStar] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
+  const session = useSession();
+  const router = useRouter();
 
   const getReviews = async () => {
     setReviewsLoading(true);
@@ -51,23 +57,28 @@ const Reviews: FC<IReviews> = ({ title }) => {
   // Feature to write a review
   const writeReview = async (stars: number) => {
     setWriting(true);
-    if (!inputRef.current) return;
-    let message = inputRef.current.value;
-    inputRef.current.value = "";
-    message = message.trim();
-    if (message.length === 0) return;
-    const body = {
-      review: message,
-      visualName: title,
-      pageLink: window.location.pathname,
-      stars,
-    };
-    let res: Response = await fetch("/api/reviews", {
-      method: "POST",
-      body: JSON.stringify(body),
-    });
-    console.log(await res.json());
-    getReviews();
+    try {
+      if (!inputRef.current) throw new Error("Can't Enter Empty Error");
+      let message = inputRef.current.value;
+      inputRef.current.value = "";
+      message = message.trim();
+      if (message.length === 0) throw new Error("Can't Enter Empty Error");
+      const body = {
+        review: message,
+        visualName: title,
+        pageLink: window.location.pathname,
+        stars,
+      };
+      let res: Response = await fetch("/api/reviews", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) throw new Error("Sign In To Continue");
+      console.log(await res.json());
+      getReviews();
+    } catch (error) {
+      console.log(error);
+    }
     setWriting(false);
   };
   useEffect(() => {
@@ -96,20 +107,32 @@ const Reviews: FC<IReviews> = ({ title }) => {
                 );
               return <Star height={20} key={"Rating-" + index} />;
             })}
-            {/* <Star height={20} className="fill-yellow-300 stroke-yellow-300" /> */}
-            {/* <Star height={20} className="fill-yellow-300 stroke-yellow-300" /> */}
-            {/* <Star height={20} className="fill-yellow-300 stroke-yellow-300" /> */}
-            {/* <Star height={20} className="fill-yellow-300 stroke-yellow-300" /> */}
           </div>
           <span className="text-muted-foreground">
             Based on {reviewList.length} reviews
           </span>
         </div>
-        <ReviewDialog
-          inputRef={inputRef}
-          writeReview={writeReview}
-          writing={writing}
-        />
+        {session.status === "unauthenticated" ? (
+          <Link
+            href="/api/auth/signin"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "rounded-full text-sm",
+            )}
+          >
+            {writing ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <span>Write a review</span>
+            )}
+          </Link>
+        ) : (
+          <ReviewDialog
+            inputRef={inputRef}
+            writeReview={writeReview}
+            writing={writing}
+          />
+        )}
       </div>
       {!reviewsLoading && reviewList.length === 0 && (
         <p className="text-muted-foreground text-center my-8">
@@ -155,6 +178,7 @@ const ReviewDialog: FC<IReviewDialog> = ({
   writing,
 }) => {
   const [star, setStar] = useState(0);
+
   return (
     <Dialog>
       <DialogTrigger asChild>

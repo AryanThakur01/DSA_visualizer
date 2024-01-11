@@ -2,7 +2,7 @@
 import { useTheme } from "next-themes";
 import { FC, ReactNode } from "react";
 import { Button } from "./ui/button";
-import { Home, MoonIcon, SunIcon, User, LogOut } from "lucide-react";
+import { Home, MoonIcon, SunIcon, User, LogOut, GitFork } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -61,6 +61,14 @@ export const SessionDropDown: FC<ISessionDropDown> = ({ children }) => {
         >
           <Home className="mr-2 h-4 w-4" />
           <span>Home</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            router.push("/stack");
+          }}
+        >
+          <GitFork className="mr-2 h-4 w-4 rotate-90" />
+          <span>Animations</span>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {

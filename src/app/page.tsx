@@ -1,6 +1,5 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Loader } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {

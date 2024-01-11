@@ -13,11 +13,11 @@ const Nav: FC<INav> = async () => {
   const session = await getServerSession(config);
   return (
     <>
-      <div className="container h-10 flex items-center justify-between">
-        <Link href="/" className="font-bold">
+      <div className="container h-10 grid grid-cols-2 items-center justify-between">
+        <Link href="/" className="md:text-xl text-sm font-bold">
           dsa/visualizer
         </Link>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-1">
           <ThemeSelector />
           {!session ? (
             <Link

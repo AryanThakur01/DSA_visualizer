@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import StarSelector from "../StarSelector";
 import { auth } from "@/utils/auth";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/utils/prismaInstance";
 import { cookies } from "next/headers";
 import { JWTDecodeParams, decode } from "next-auth/jwt";
 import Reviews from "../Reviews";
@@ -13,7 +13,6 @@ interface IDsTemplate {
   children: ReactNode;
 }
 
-const prisma = new PrismaClient();
 const Template: FC<IDsTemplate> = async ({ title, icon, intro, children }) => {
   const session = await auth();
   let starred = false;

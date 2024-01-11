@@ -8,9 +8,8 @@ import { getServerSession } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 // import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-const prisma = new PrismaClient();
+import { prisma } from "./prismaInstance";
 
 export const options: NextAuthOptions = {
   session: { strategy: "jwt" },

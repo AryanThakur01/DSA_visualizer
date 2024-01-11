@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { JWTDecodeParams, decode } from "next-auth/jwt";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/utils/prismaInstance";
 
 const cookieToPayload = async (req: NextRequest) => {
   const cookie = req.cookies.get(
