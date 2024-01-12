@@ -178,7 +178,7 @@ const ReviewDialog: FC<IReviewDialog> = ({
   writeReview,
   writing,
 }) => {
-  const [star, setStar] = useState(0);
+  const [star, setStar] = useState(4);
 
   return (
     <Dialog>
