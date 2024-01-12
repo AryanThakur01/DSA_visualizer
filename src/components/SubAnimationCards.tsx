@@ -2,13 +2,13 @@ import React, { FC, ReactNode } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface ISubAnimationCards {
   title: string;
   description: string;
   pageLink: string;
-  image: string;
+  image?: StaticImageData;
 }
 
 const SubAnimationCards: FC<ISubAnimationCards> = ({
@@ -23,12 +23,15 @@ const SubAnimationCards: FC<ISubAnimationCards> = ({
         <div className="bg-gray-800 w-16 h-2 rounded-full"></div>
         <div className="bg-gray-800 w-16 h-2 rounded-full"></div>
       </div>
-      <Image
-        width={1920}
-        height={1080}
-        src={image}
-        className="border-[0.6rem] border-gray-800 rounded-xl w-full md:min-h-[10rem] mb-4"
-      />
+      {image && (
+        <Image
+          width={1920}
+          height={1080}
+          src={image}
+          className="border-[0.6rem] border-gray-800 rounded-xl w-full md:min-h-[10rem] mb-4"
+          alt={title}
+        />
+      )}
       <h2 className="font-bold text-xl">{title}</h2>
       <p className="text-muted-foreground italic my-4">{description}</p>
       <div className="flex justify-end mt-auto">
