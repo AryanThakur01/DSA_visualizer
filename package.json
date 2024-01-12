@@ -23,6 +23,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@reduxjs/toolkit": "^2.0.1",
     "@types/mdx": "^2.0.10",
+    "@vercel/analytics": "^1.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.284.0",

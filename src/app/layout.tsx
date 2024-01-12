@@ -9,12 +9,16 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 import NextAuthSessionProvider from "@/components/NextAuthSessionProvider";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "DSA Visualizer",
   description: "get the visualization of data structures and algorithms",
+  verification: {
+    google: "fzlZZKohQWgPVK2Dw4eokS7HWZMWq0UOcxhENin5o0Y",
+  },
 };
 
 export default function RootLayout({
@@ -51,6 +55,7 @@ export default function RootLayout({
           </ReduxProvider>
         </NextAuthSessionProvider>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
