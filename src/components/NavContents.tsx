@@ -65,7 +65,7 @@ export const SessionDropDown: FC<ISessionDropDown> = ({ children }) => {
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
-            router.push("/stack");
+            router.push("/allanimations");
           }}
         >
           <GitFork className="mr-2 h-4 w-4 rotate-90" />

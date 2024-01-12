@@ -29,7 +29,6 @@ export const GET = async (req: NextRequest) => {
     });
     return new NextResponse(JSON.stringify(res));
   } catch (error) {
-    console.log(error);
     return new NextResponse(JSON.stringify(error), { status: 500 });
   }
 };
@@ -45,7 +44,6 @@ export const POST = async (req: NextRequest) => {
     });
     return new NextResponse(JSON.stringify(res));
   } catch (error) {
-    console.log(error);
     return new NextResponse(JSON.stringify(error), { status: 500 });
   }
 };

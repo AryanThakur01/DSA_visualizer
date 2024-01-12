@@ -11,13 +11,12 @@ import {
 import { usePathname, useSearchParams } from "next/navigation";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Button } from "./ui/button";
 
 interface ILeftNav {
   children?: ReactNode;

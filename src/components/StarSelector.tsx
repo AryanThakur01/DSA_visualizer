@@ -6,6 +6,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { starDec, starInc } from "@/redux/slices/StarSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface IStarSelector {
   title: string;
@@ -17,10 +18,13 @@ const StarSelector: FC<IStarSelector> = ({ title, isStarred }) => {
   const [star, setStar] = useState(isStarred || false);
   const stateDispatcher = useAppDispatch();
   const router = useRouter();
+  const session = useSession();
 
   const StarToggle = async () => {
     setUploading(true);
     try {
+      if (session.status === "unauthenticated")
+        throw new Error("Sign in to continue");
       let res: Response;
       const body = { visualName: title, pageLink: window.location.pathname };
       if (!star) {
@@ -41,7 +45,7 @@ const StarSelector: FC<IStarSelector> = ({ title, isStarred }) => {
       setStar(!star);
     } catch (error) {
       console.log(typeof error);
-      toast.error("Sign in to continue", {
+      toast.error("Login in to continue", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,

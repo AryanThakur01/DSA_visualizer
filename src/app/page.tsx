@@ -10,8 +10,7 @@ export default function Home() {
           DATA STRUCTURES AND ALGORITHMS VISUALIZER
         </h1>
         <p className="max-w-[45rem] md:mx-auto">
-          Get down all the concepts of datastructures and algorithms, with our
-          modern visualizer app
+          Visualize Code Flow: DSA Wizardry in Action!{" "}
         </p>
         <div className="flex gap-3 my-4 w-fit">
           <Link

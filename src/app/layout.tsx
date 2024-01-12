@@ -8,6 +8,7 @@ import ReduxProvider from "@/redux/ReduxProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 import NextAuthSessionProvider from "@/components/NextAuthSessionProvider";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,6 +50,7 @@ export default function RootLayout({
             </ThemeProvider>
           </ReduxProvider>
         </NextAuthSessionProvider>
+        <Footer />
       </body>
     </html>
   );

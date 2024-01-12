@@ -22,7 +22,10 @@ const Nav: FC<INav> = async () => {
           {!session ? (
             <Link
               href="/api/auth/signin"
-              className={cn(buttonVariants({ variant: "secondary" }))}
+              className={cn(
+                buttonVariants({ variant: "destructive" }),
+                "bg-success hover:bg-success/90 font-bold",
+              )}
             >
               Login
             </Link>

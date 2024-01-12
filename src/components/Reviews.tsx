@@ -43,7 +43,6 @@ const Reviews: FC<IReviews> = ({ title }) => {
   const [avgStar, setAvgStar] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
   const session = useSession();
-  const router = useRouter();
 
   const getReviews = async () => {
     setReviewsLoading(true);
@@ -108,9 +107,11 @@ const Reviews: FC<IReviews> = ({ title }) => {
               return <Star height={20} key={"Rating-" + index} />;
             })}
           </div>
-          <span className="text-muted-foreground">
-            Based on {reviewList.length} reviews
-          </span>
+          {!reviewsLoading && (
+            <span className="text-muted-foreground">
+              Based on {reviewList.length} reviews
+            </span>
+          )}
         </div>
         {session.status === "unauthenticated" ? (
           <Link

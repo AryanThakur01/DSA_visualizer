@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React, { FC, useLayoutEffect, useState } from "react";
 import { Button, buttonVariants } from "../ui/button";
-import { Loader, Trash2 } from "lucide-react";
+import { Loader, Loader2, Trash2 } from "lucide-react";
 
 interface IStarredElems {}
 
@@ -17,9 +17,12 @@ interface IFetchedStar {
 const StarredElems: FC<IStarredElems> = () => {
   const [starred, setStarred] = useState<Array<IFetchedStar>>([]);
   const [uploading, setUploading] = useState(-1);
+  const [fetchingStarred, setFetchingStarred] = useState(false);
   const getStarredElems = async () => {
+    setFetchingStarred(true);
     const req = await fetch("/api/save", { method: "GET" });
     setStarred(await req.json());
+    setFetchingStarred(false);
   };
   useLayoutEffect(() => {
     getStarredElems();
@@ -45,32 +48,40 @@ const StarredElems: FC<IStarredElems> = () => {
             <th>Page</th>
             <th>Delete</th>
           </tr>
-          {starred.map((item, id) => (
-            <tr key={"Stars" + id} className="grid grid-cols-3 gap-16">
-              <td className="flex items-center">{item.visualName}</td>
-              <td className="flex items-center justify-center">
-                <Link
-                  href={item.pageLink}
-                  className={cn(buttonVariants({ variant: "outline" }))}
-                >
-                  Visit
-                </Link>
-              </td>
-              <td className="flex justify-center items-center text-destructive">
-                {uploading === id ? (
-                  <Loader className="animate-spin" />
-                ) : (
-                  <Button
-                    variant="link"
-                    className="text-red-600 hover:scale-110 hover:invert-[10%]"
-                    onClick={() => RemoveStarred(item.visualName, id)}
+          {fetchingStarred ? (
+            <Loader2 className="animate-spin mx-auto" />
+          ) : starred.length === 0 ? (
+            <p className="text-muted-foreground text-center my-4">
+              No Starred Elements
+            </p>
+          ) : (
+            starred.map((item, id) => (
+              <tr key={"Stars" + id} className="grid grid-cols-3 gap-16">
+                <td className="flex items-center">{item.visualName}</td>
+                <td className="flex items-center justify-center">
+                  <Link
+                    href={item.pageLink}
+                    className={cn(buttonVariants({ variant: "outline" }))}
                   >
-                    <Trash2 />
-                  </Button>
-                )}
-              </td>
-            </tr>
-          ))}
+                    Visit
+                  </Link>
+                </td>
+                <td className="flex justify-center items-center text-destructive">
+                  {uploading === id ? (
+                    <Loader className="animate-spin" />
+                  ) : (
+                    <Button
+                      variant="link"
+                      className="text-red-600 hover:scale-110 hover:invert-[10%]"
+                      onClick={() => RemoveStarred(item.visualName, id)}
+                    >
+                      <Trash2 />
+                    </Button>
+                  )}
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </section>
