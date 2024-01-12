@@ -15,7 +15,7 @@ export default function Home() {
         </p>
         <div className="flex gap-3 my-4 w-fit">
           <Link
-            href="/stack"
+            href="/allanimations"
             className={cn(buttonVariants({ variant: "outline" }), "mx-auto")}
           >
             GET STARTED

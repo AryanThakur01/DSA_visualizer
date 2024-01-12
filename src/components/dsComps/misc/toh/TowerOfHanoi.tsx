@@ -6,13 +6,26 @@ import { ArrowUpNarrowWide } from "lucide-react";
 interface ITOH {}
 
 const TowerOfHanoi: FC<ITOH> = () => {
+  const contentList = [
+    {
+      id: "what-is-tower-of-hanoi",
+      title: "What is Tower of Hanoi?",
+      paras: [
+        "The Tower of Hanoi is a classic mathematical puzzle consisting of three rods and a number of disks of different sizes. The objective is to move the entire stack of disks from one rod to another, obeying the following simple rules:",
+        "- Only one disk can be moved at a time.",
+        "- Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod.",
+        "- No disk may be placed on top of a smaller disk.",
+      ],
+    },
+  ];
   return (
     <Template
       title="Tower Of Hanoi"
-      intro="Tower of Hanoi is a mathematical puzzle where we have three rods (A, B, and C) and N disks. Initially, all the disks are stacked in decreasing value of diameter i.e., the smallest disk is placed on the top and they are on rod A. The objective of the puzzle is to move the entire stack to another rod (here considered C),"
+      intro="Unraveling the Puzzle, One Move at a Time!"
       icon={<ArrowUpNarrowWide />}
+      contentList={contentList}
     >
-      <LLSectionTemplate>
+      <LLSectionTemplate className="my-4">
         <TOHAnimation />
       </LLSectionTemplate>
     </Template>
