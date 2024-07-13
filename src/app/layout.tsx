@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: "DSA Visualizer",
   description: "get the visualization of data structures and algorithms",
   verification: {
-    google: "hPaD5Dfrq_bEvtjWEeDbwi2oPafdhKC9F6mpjRrZ3B8",
+    google: "RNvvh6bNcE_pCSsqJ7XNg6pph1ImD4eQ_CiVFBB-tKI",
   },
 };
 
